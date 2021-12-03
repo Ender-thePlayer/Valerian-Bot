@@ -68,6 +68,7 @@
     "is-stream": "^1.1.0",
     "is-typedarray": "^1.0.0",
     "isstream": "^0.1.2",
+    "lavasfy": "^2.3.0",
     "jimp": "^0.16.1",
     "jpeg-js": "^0.4.2",
     "jsbn": "^0.1.1",
