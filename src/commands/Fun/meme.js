@@ -30,13 +30,14 @@ module.exports = {
             
         }).then((post) => {
             let embed = new MessageEmbed()
-            .setColor(embedNeutral)
             .setTitle('**Meme Command**')
             .setDescription(`${post.title}`)
             .setImage(`${post.url}`)
+            .setColor(embedNeutral)
             .setTimestamp()
             .setFooter("@" + message.author.tag, message.author.displayAvatarURL({dynamic : true}))
 
-            message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
-                setTimeout(() => msg.delete(), 120000)})})
-    }};
+        message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
+            setTimeout(() => msg.delete(), 120000)})})
+    }
+}

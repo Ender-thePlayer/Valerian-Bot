@@ -65,11 +65,11 @@ module.exports = {
                     setTimeout(() => msg.delete(), 120000)});
         };
 
-        mentionMember.ban({ days: 1, reason: reason })
+        mentionMember.ban({ reason: reason })
 
         let embed = new MessageEmbed()
             .setTitle('**Ban Command**')
-            .setDescription(`${target} was banned with the reason: **${reason}**!`)
+            .setDescription(`${target} was banned saving messages with the reason: **${reason}**!`)
             .setColor(embedSuccess)
 
         message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{

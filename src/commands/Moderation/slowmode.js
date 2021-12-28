@@ -24,9 +24,8 @@ module.exports = {
                 .setDescription('You don`t have permission to use this command')
                 .setColor(embedError)
 
-            await message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
+            return message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
                 setTimeout(() => msg.delete(), 120000)});
-            return;
             };
 
 
@@ -37,14 +36,11 @@ module.exports = {
                     .setDescription(`Slowmode was turned off`)
                     .setColor(embedSuccess)
 
-                await message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
+                return message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
                     setTimeout(() => msg.delete(), 120000)});
-                return;
             };
 
-
         const raw = args[0];
-
 
         if(isNaN(raw)){
             let embed = new MessageEmbed()
@@ -52,9 +48,8 @@ module.exports = {
                 .setDescription('This isn`t a valid number')
                 .setColor(embedError)
                 
-            await message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
+            return message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
                 setTimeout(() => msg.delete(), 120000)});
-            return
         };
 
 
@@ -65,9 +60,8 @@ module.exports = {
                     .setDescription('You cannot set a slowmode lower than 1 second!')
                     .setColor(embedError)
 
-                await message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
+                return message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
                     setTimeout(() => msg.delete(), 120000)});
-                return;
         };
 
 
@@ -82,14 +76,14 @@ module.exports = {
             };
 
 
-        await message.channel.setRateLimitPerUser(raw)
+        message.channel.setRateLimitPerUser(raw)
 
-            let embed = new MessageEmbed()
+        let embed = new MessageEmbed()
             .setTitle('**Slowmode Command**')
             .setDescription(`Slowmode was set on ${raw} seconds`)
             .setColor(embedSuccess)
 
-        await message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
+        message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
             setTimeout(() => msg.delete(), 120000)});
 
         }};

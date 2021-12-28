@@ -1,6 +1,6 @@
 // consts \\
 
-const { embedColor, embedNeutral } = require("../../config.js");
+const { embedNeutral } = require("../../config.js");
 const { embedError } = require("../../config.js");
 const { embedSuccess } = require("../../config.js");
 const { MessageEmbed, Permissions } = require("discord.js");
@@ -24,15 +24,15 @@ module.exports = async (client, message) => {
     if (message.content.match(mention)) {
         let embed = new MessageEmbed()
         .setTitle('**Bot Description**')
-        .setDescription(`Hello, my name is **Valerian Bot**, a project made to convert Brobotel the Bot to js. \nMy prefix is \`\`${prefix}\`\`. Type \`\`js!help\`\` or \`\`js!aliases\`\` to see the list of valid commands!`)
+        .setDescription(`Hello, my name is **Valerian Bot**, my prefix is \`\`${prefix}\`\`. Type \`\`${prefix}help\`\` or \`\`${prefix}aliases\`\` to see the list of valid commands!`)
         .addFields(
           { name: 'Quick Links', value: "**[Invite Bot](https://discord.com/api/oauth2/authorize?client_id=810856860751495198&permissions=8&scope=bot)** | **[Our Website](http://brobotelbot.ml)**"}
       )
         .setThumbnail(client.user.displayAvatarURL({dynamic: true}))
-        .setColor(embedColor)
+        .setColor(embedNeutral)
   
-      return message.channel.send( { embeds: [embed] }).then(setTimeout(() => message.delete())).then(msg =>{
-      setTimeout(() => msg.delete(), 120000)})};
+    return message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
+        setTimeout(() => msg.delete(), 120000)})};
 
     const escapeRegex = (str) => str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
@@ -52,8 +52,8 @@ module.exports = async (client, message) => {
       .setDescription(`\`\`${prefix}${commandName}\`\` is not a valid command! Type \`\`${prefix}help\`\` or \`\`${prefix}aliases\`\` to see the list of valid commands!`)
       .setColor(embedError)
 
-    return message.channel.send( { embeds: [embed] }).then(setTimeout(() => message.delete())).then(msg =>{
-    setTimeout(() => msg.delete(), 120000)})};
+    return message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
+        setTimeout(() => msg.delete(), 120000)})};
 
     if(!message.guild.me.permissions.has(Permissions.FLAGS.SEND_MESSAGES)) return await message.author.dmChannel.send({ content: `I don't have **\`SEND_MESSAGES\`** permission in <#${message.channelId}> to execute **\`${command.name}\`** command.` }).catch(() => {});
     if(!message.guild.me.permissions.has(Permissions.FLAGS.VIEW_CHANNEL)) return;
@@ -73,8 +73,8 @@ module.exports = async (client, message) => {
         }
         
         embed.setDescription(reply);
-		return message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
-			setTimeout(() => msg.delete(), 120000)});
+        return message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
+            setTimeout(() => msg.delete(), 120000)});
     }
 
     if (command.permission && !message.member.permissions.has(command.permission)) {

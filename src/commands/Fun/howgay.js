@@ -20,18 +20,28 @@ module.exports = {
 
 		let member = message.mentions.members.first() || message.member;
 
+		if (args[1]) {
+			const embed = new MessageEmbed()
+				.setTitle('**Error Occurred**')
+				.setDescription("You can't tag 2 persons!")
+				.setColor(embedError)
+			return message.reply({ embeds: [embed] });
+		}
+
 		var arr = [];
+		
 		while(arr.length < 1){
-				var r = Math.floor(Math.random() * 100) + 1;
-				if(arr.indexOf(r) === -1) arr.push(r)};
+			var r = Math.floor(Math.random() * 100) + 1;
+			if(arr.indexOf(r) === -1) arr.push(r)};
 
 		let embed = new MessageEmbed()
-			.setColor(embedNeutral)
 			.setTitle('**How Gay Command**')
 			.addField(`${member.user.tag} is:`, `${arr}% gay!`)
+			.setColor(embedNeutral)
 			.setTimestamp()
 			.setFooter("@" + message.author.tag, message.author.displayAvatarURL({dynamic : true}))
 
-		await message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
+		message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
 			setTimeout(() => msg.delete(), 120000)});
-	}};
+	}
+}

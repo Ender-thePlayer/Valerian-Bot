@@ -23,21 +23,22 @@ module.exports = {
 			.setTitle('**Changelogs Command**')
 			.addFields(
 
-				{ name: 'Current Version:', value:'``beta_0.4.0``', inline: true },
+				{ name: 'Current Version:', value:'``beta_0.8.0_pre-2``', inline: true },
 
-				{ name: 'Version Name:', value:'``Beta Progress Update``', inline: true },
+				{ name: 'Version Name:', value:'``Beta Pre-Release Update``', inline: true },
 
-				{ name: 'Changelogs:', value: '```⏵ Added Ticket Command```',inline: false },
+				{ name: 'Changelogs:', value: '```⏵ Added Ban Save Command\n⏵ Fixed Prefix Bug when Tagged```',inline: false }
 
-				{ name: 'Last Version:', value:'``beta_0.3.4``', inline: true },
+			//	{ name: 'Last Version:', value:'``beta_0.7.0_pre-1``', inline: true },
 
-				{ name: 'Last Version Name:', value:'``Beta Progress Update``', inline: true },
+			//	{ name: 'Version Name:', value:'``Beta Pre-Release Update``', inline: true },
 
-				{ name: 'Changelogs:', value: '```⏵ Added F in chat command \n⏵ Added Rickroll Command```',inline: false },
-        )
+			//  { name: 'Changelogs:', value: '```⏵ Added About Command\n⏵ Added Ticket Command\n⏵ Added Prefix Command\n⏵ Added New Message UI\n⏵ Now the Bot Replies Instead of Sending Messages\n⏵ Updated Bot Host\n⏵ Updated Bot Base Code\n⏵ Updated Other Things```',inline: false }
+
+			)
 			.setTimestamp()
 			.setFooter("@" + message.author.tag, message.author.displayAvatarURL({dynamic : true}))
 
-		await message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
+		message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
 			setTimeout(() => msg.delete(), 120000)});
 }};

@@ -33,15 +33,15 @@ module.exports = {
             .addFields(
                 { name: 'Bot Stuff:' , value: `Tag: <@${client.user.id}> \nID: ${client.user.id}` },
                 { name: 'Serving:' , value: `${client.guilds.cache.size} servers`, inline: true},
-                { name: 'Version:' , value: `beta_0.4.0`, inline: true },
+                { name: 'Version:' , value: `beta_0.8.0_pre-2`, inline: true },
                 { name: 'DJS Version:' , value: `${require("discord.js").version}`, inline: true },
-                { name: 'Uptime:', value: `${Math.round(days)} days, ${Math.round(hours)} hrs, ${Math.round(minutes)} mins, ${Math.round(seconds)} sec`},
+                { name: 'Uptime:', value: `${Math.round(days)} day(s), ${Math.round(hours)} hrs, ${Math.round(minutes)} mins, ${Math.round(seconds)} sec`},
                 { name: 'Links:' , value: `**[Invite Bot](https://discord.com/api/oauth2/authorize?client_id=810856860751495198&permissions=8&scope=bot)** \n⏵ Add Bot to Your Server!` },
             )
             .setTimestamp()
             .setFooter("@" + message.author.tag, message.author.displayAvatarURL({dynamic : true}))
         
-        await message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
+        message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
             setTimeout(() => msg.delete(), 120000)});
 
 }};

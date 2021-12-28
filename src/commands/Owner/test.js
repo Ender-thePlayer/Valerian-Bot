@@ -21,20 +21,20 @@ module.exports = {
 
 		if (message.author.id === 849304080895180851 || 506097799536967710) {
 			let embed = new MessageEmbed()
-			  .setColor(embedNeutral)
-			  .setTitle('**Test Command**')
-			  .addFields(
-				  { name: 'Bot Is...', value: "Still Workin'"}
-			  )
-			  .setTimestamp()
-			  .setFooter("@" + message.author.tag, message.author.displayAvatarURL({dynamic : true}))
+				.setColor(embedNeutral)
+				.setTitle('**Test Command**')
+				.addFields(
+					{ name: 'Bot Is...', value: "Still Workin'"}
+			  	)
+			  	.setTimestamp()
+			  	.setFooter("@" + message.author.tag, message.author.displayAvatarURL({dynamic : true}))
 
 			message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
 			setTimeout(() => msg.delete(), 120000)});
   
 			} else {
   
-			  message.delete()
+			message.delete()
   
 		};
 }}

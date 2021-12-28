@@ -18,17 +18,24 @@ module.exports = {
     owner: false,
     execute: async (message, args, client, prefix) => {
 
-    let member = message.mentions.members.first() || message.member;
+        if (args[1]) {
+			const embed = new MessageEmbed()
+				.setTitle('**Error Occurred**')
+				.setDescription("You can't tag 2 persons!")
+				.setColor(embedError)
+			return message.reply({ embeds: [embed] });
+		}
 
-    let embed = new MessageEmbed()
+        let member = message.mentions.members.first() || message.member;
 
-        .setColor(embedNeutral)
-        .setTitle(`${member.user.tag}'s Avatar`)
-        .setImage(member.user.displayAvatarURL({dynamic: true, size: 512 }))
-        .setTimestamp()
-        .setFooter("@" + message.author.tag, message.author.displayAvatarURL({dynamic : true}))
-        
-    await message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
-        setTimeout(() => msg.delete(), 120000)});
-        
-    }};
+        let embed = new MessageEmbed()
+            .setTitle(`${member.user.tag}'s Avatar`)
+            .setImage(member.user.displayAvatarURL({dynamic: true, size: 512 }))
+            .setColor(embedNeutral)
+            .setTimestamp()
+            .setFooter(`@${message.author.tag}`, message.author.displayAvatarURL({dynamic : true}))
+            
+        message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
+            setTimeout(() => msg.delete(), 120000)});
+    }
+}

@@ -25,12 +25,12 @@ module.exports = {
 			.addFields(
 				{ name: 'Bot Latency', value:`\`\`\`ini\n[ ${Date.now() - message.createdTimestamp}ms ]\n\`\`\``, inline: true },
 				{ name: 'Api Latency', value:`\`\`\`ini\n[ ${client.ws.ping}ms ]\n\`\`\``, inline: true },
-				{ name: 'Server Location', value:`\`\`\`ini\n[heroku_eu]\n\`\`\``, inline: true },
+				{ name: 'Server Location', value:`\`\`\`ini\n[railwayapp_us-west]\n\`\`\``, inline: true },
 			)
 			.setTimestamp()
 			.setFooter("@" + message.author.tag, message.author.displayAvatarURL({dynamic : true}))
 			
-		await message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
+		message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
 			setTimeout(() => msg.delete(), 120000)});
 
     }};

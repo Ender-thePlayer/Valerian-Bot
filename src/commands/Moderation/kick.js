@@ -31,23 +31,19 @@ module.exports = {
             .setDescription('You don`t have permission to use this command')
             .setColor(embedError)
 
-        await message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
+        return message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
             setTimeout(() => msg.delete(), 120000)});
-
-        return;
         }
 
 
         if (!args.length) {
-        let embed = new MessageEmbed()
-            .setTitle('**Error Occurred**')
-            .setDescription('Please Mention Somebody to Kick')
-            .setColor(embedError)
+            let embed = new MessageEmbed()
+                .setTitle('**Error Occurred**')
+                .setDescription('Please Mention Somebody to Kick')
+                .setColor(embedError)
 
-        await message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
-            setTimeout(() => msg.delete(), 120000)});
-
-        return;
+            return message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
+                setTimeout(() => msg.delete(), 120000)});
         }
 
 
@@ -57,30 +53,30 @@ module.exports = {
                 .setDescription('That isn`t a user!')
                 .setColor(embedError)
 
-            await message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
+            return message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
                 setTimeout(() => msg.delete(), 120000)});
-            return;
         };
 
+        
         if(!mentionMember.kickable) {
             let embed = new MessageEmbed()
                 .setTitle('**Error Occurred**')
                 .setDescription(`This user is a moderator!`)
                 .setColor(embedError)
 
-            await message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
+            return message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
                     setTimeout(() => msg.delete(), 120000)});
-            return;
         };
 
             
-        await mentionMember.kick({ reason: reason })
+        mentionMember.kick({ reason: reason })
 
         let embed = new MessageEmbed()
             .setTitle('**Ban Command**')
             .setDescription(`${target} was banned with the reason: **${reason}**!`)
             .setColor(embedSuccess)
 
-            await message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
-                setTimeout(() => msg.delete(), 120000)})
-        }};
+        message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
+            setTimeout(() => msg.delete(), 120000)})
+    }
+}

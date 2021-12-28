@@ -30,10 +30,10 @@ execute: async (message, args, client) => {
 		.setTitle('**Aliases Command**')
 		.setDescription('Thse are the aliases! In the left are the commands and in the right are the aliases.')
 		.addFields(
-			{ name: 'Utility Commands: ', value:`${p}about - \`\`ab\`\`\n${p}aliases - \`\`alias\`\`\n${p}changelogs - \`\`ch\`\`, \`\`logs\`\`\n${p}help - \`\`h\`\`\n${p}info - \`\`botinfo\`\`, \`\`i\`\`\n${p}ping - \`\`latency\`\`` , inline: true },
-			{ name: 'Fun Commands: ', value: `${p}avatar - \`\`av\`\`\n${p}f - \`\`F\`\`\n${p}howgay - \`\`gay\`\`\n${p}meme - \`\`m\`\`\n${p}rickroll - \`\`rick\`\`, \`\`roll\`\``, inline: true },
-			{ name: 'Guild Commands: ', value: `${p}serverinfo - \`\`si\`\`\n${p}ticket - \`\`tt\`\`,\`\`newticket\`\`\n${p}userinfo - \`\`ui\`\``, inline: true },
-			{ name: 'Moderation Commands: ', value: `${p}clear - \`\`purge\`\`\n${p}slowmode - \`\`slow\`\``, inline: true },
+			{ name: 'Music Commands: ', value: `${p}247 - \`\`24h\`\`, \`\`24/7\`\`, \`\`24*7\`\` \n ${p}clearqueue - \`\`cq\`\` \n ${p}play - \`\`p\`\` \n ${p}aliases - \`\`alias\`\`, \`\`as\`\` \n ${p}info - \`\`botinfo, i\`\``, inline: true },
+			{ name: 'Utility Commands: ', value: `${p}changelogs - \`\`ch\`\`, \`\`logs\`\` \n ${p}ping - \`\`latency\`\` \n ${p}help - \`\`h\`\` \n ${p}aliases - \`\`alias\`\`, \`\`as\`\` \n ${p}info - \`\`botinfo, i\`\``, inline: true },
+			{ name: 'Fun Commands: ', value: `${p}howgay - \`\`gay\`\` \n ${p}avatar - \`\`av\`\` \n ${p}f - \`\`F\`\` \n ${p}rickroll - \`\`nevergonna\`\` , \`\`rick\`\` , \`\`roll\`\``, inline: true },
+			{ name: 'Moderation Commands: ', value: `${p}clear - \`\`purge\`\` \n ${p}slowmode - \`\`slow\`\` \n ${p}serverinfo - \`\`si\`\` \n ${p}userinfo - \`\`ui\`\` \n ${p}ticket - \`\`tt\`\`,\`\`newticket\`\``, inline: true },
 		)
 		.setTimestamp()
 		.setFooter("@" + message.author.tag, message.author.displayAvatarURL({dynamic : true}))
