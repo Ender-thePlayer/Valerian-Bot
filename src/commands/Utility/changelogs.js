@@ -23,11 +23,11 @@ module.exports = {
 			.setTitle('**Changelogs Command**')
 			.addFields(
 
-				{ name: 'Current Version:', value:'``beta_0.8.0_pre-2``', inline: true },
+				{ name: 'Current Version:', value:'``1.0.0``', inline: true },
 
-				{ name: 'Version Name:', value:'``Beta Pre-Release Update``', inline: true },
+				{ name: 'Version Name:', value:'``First Release Update``', inline: true },
 
-				{ name: 'Changelogs:', value: '```⏵ Added Ban Save Command\n⏵ Fixed Prefix Bug when Tagged```',inline: false }
+				{ name: 'Changelogs:', value: '```⏵ Added all Commands from all the betas```',inline: false }
 
 			//	{ name: 'Last Version:', value:'``beta_0.7.0_pre-1``', inline: true },
 

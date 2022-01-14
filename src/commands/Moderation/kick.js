@@ -72,7 +72,7 @@ module.exports = {
         mentionMember.kick({ reason: reason })
 
         let embed = new MessageEmbed()
-            .setTitle('**Ban Command**')
+            .setTitle('**Kick Command**')
             .setDescription(`${target} was banned with the reason: **${reason}**!`)
             .setColor(embedSuccess)
 

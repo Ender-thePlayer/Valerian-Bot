@@ -68,6 +68,7 @@ module.exports = async (client, interaction) => {
 
             channel.delete()
 
-        }
-    return;}
+        } else return;
+    return;
+    }
 }

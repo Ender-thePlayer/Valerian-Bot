@@ -10,7 +10,7 @@ const { MessageEmbed } = require("discord.js");
 module.exports = {
     name: "about",
     category: "Utility",
-    aliases: [],
+    aliases: ['ab'],
     description: "About Command",
     args: false,
     usage: "js!about",
@@ -21,13 +21,11 @@ module.exports = {
         let embed = new MessageEmbed()
             .setColor(embedNeutral)
             .setTitle('**About Command**')
-            .setDescription(`**Valerian Bot** is owned by Ender under the name of EndR Productions and is helped by Yang, big thanks to Yang!`)
-            .addFields(
-                { name: 'Expected to Release on', value: '24.12.21 - Bot is: 7% ready'}
-            )
+            .setImage("https://i.imgur.com/usLfAMl.png")
+
             .setTimestamp()
             .setFooter("@" + message.author.tag, message.author.displayAvatarURL({dynamic : true}))
 
-        await message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
+        message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
             setTimeout(() => msg.delete(), 120000)});
 }};

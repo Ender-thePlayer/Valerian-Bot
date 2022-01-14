@@ -21,7 +21,7 @@ module.exports = {
         if (args[1]) {
 			const embed = new MessageEmbed()
 				.setTitle('**Error Occurred**')
-				.setDescription("You can't tag 2 persons!")
+				.setDescription("You can't tag two users!")
 				.setColor(embedError)
 			return message.reply({ embeds: [embed] });
 		}
@@ -29,7 +29,8 @@ module.exports = {
         let member = message.mentions.members.first() || message.member;
 
         let embed = new MessageEmbed()
-            .setTitle(`${member.user.tag}'s Avatar`)
+            .setTitle(`**Avatar Command**`)
+            .setDescription(`${member.user.tag}'s Avatar`)
             .setImage(member.user.displayAvatarURL({dynamic: true, size: 512 }))
             .setColor(embedNeutral)
             .setTimestamp()

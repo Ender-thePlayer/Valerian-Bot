@@ -12,7 +12,7 @@ module.exports = {
     name: "serverinfo",
     category: "Moderation",
     aliases: [ 'si' ],
-    description: "Serverinfo Command",
+    description: "ServerInfo Command",
     args: false,
     usage: ``,
     permission: [],
@@ -22,7 +22,7 @@ module.exports = {
         let embed = new MessageEmbed()
             .setThumbnail(message.guild.iconURL({dynamic : true}))
             .setColor(embedNeutral)
-            .setTitle(`**Bot Command**`)
+            .setTitle(`**ServerInfo Command**`)
             .setFooter("@" + message.author.tag, message.author.displayAvatarURL({dynamic : true}))
             .addFields(
         

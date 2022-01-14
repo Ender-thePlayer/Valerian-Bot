@@ -28,7 +28,6 @@ module.exports = {
                 setTimeout(() => msg.delete(), 120000)});
         }
 
-
         if (!args.length) {
             return message.channel.messages.fetch({ limit: 10,before:message.id }).then(messages => {
                 message.channel.bulkDelete(messages);
@@ -43,7 +42,6 @@ module.exports = {
             })
         };
 
-
         if(isNaN(args[0])){
 
             let embed = new MessageEmbed()
@@ -54,7 +52,6 @@ module.exports = {
             return message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
                 setTimeout(() => msg.delete(), 120000)});
         }
-
 
         if(args[0] > 100) {
             let embed = new MessageEmbed()

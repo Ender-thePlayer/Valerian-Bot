@@ -12,7 +12,7 @@ module.exports = {
     name: "userinfo",
     category: "Moderation",
     aliases: [ 'ui' ],
-    description: "Userinfo Command",
+    description: "UserInfo Command",
     args: false,
     usage: ``,
     permission: [],

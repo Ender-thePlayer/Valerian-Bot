@@ -11,7 +11,7 @@ module.exports = {
 	name: "howgay",
 	category: "Fun",
 	aliases: [ 'gay' ],
-	description: "Howgay Command",
+	description: "HowGay Command",
 	args: false,
 	usage: ``,
 	permission: [],
@@ -35,7 +35,7 @@ module.exports = {
 			if(arr.indexOf(r) === -1) arr.push(r)};
 
 		let embed = new MessageEmbed()
-			.setTitle('**How Gay Command**')
+			.setTitle('**HowGay Command**')
 			.addField(`${member.user.tag} is:`, `${arr}% gay!`)
 			.setColor(embedNeutral)
 			.setTimestamp()

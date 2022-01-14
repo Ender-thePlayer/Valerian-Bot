@@ -9,33 +9,35 @@ const { MessageEmbed } = require("discord.js");
 // command \\
 
 module.exports = {
-  name: "annch",
-  category: "Owner",
-  aliases: [ 'r' ],
-  description: "Annch Command",
-  args: false,
-  usage: ``,
-  permission: [],
-  owner: true,
-  execute: async (message, args, client) => {
+	name: "announcement",
+	category: "Owner",
+	aliases: [ 'r' ],
+	description: "Announcement Command",
+	args: false,
+	usage: ``,
+	permission: [],
+	owner: true,
+	execute: async (message, args, client) => {
   
 
-    if (message.author.id === 849304080895180851 || 506097799536967710) {
-          let embed = new Discord.MessageEmbed()
-            .setColor('#dd6fb9')
-            .setTitle('**Announcement**')
-            .addFields(
-                { name: 'Sad...', value: "Din pacate vacanta de 2 saptamani (25 oct - 7 nov) in mai putin de 2 ore se va termina, ce trist.. dar macar is in online!"}
-            )
-            .setTimestamp()
-            .setFooter("@" + message.author.tag, message.author.displayAvatarURL({dynamic : true}))
+		if (message.author.id === 849304080895180851 || 506097799536967710) {
+			let embed = new MessageEmbed()
+					.setColor(embedNeutral)
+					.setTitle('**Announcements**')
+					.addFields(
 
-            message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
-              setTimeout(() => msg.delete(), 120000)});
+						{ name: 'Today`s Announcement:', value:'``We are going to release Valerian Officialy Right Now!``', inline: true },
 
-          } else {
+					)
+					.setTimestamp()
+					.setFooter("@" + message.author.tag, message.author.displayAvatarURL({dynamic : true}))
 
-            message.delete()
+			message.channel.send( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
+				setTimeout(() => msg.delete(), 120000)});
 
-          };
+		} else {
+
+			message.delete()
+
+		};
 }};

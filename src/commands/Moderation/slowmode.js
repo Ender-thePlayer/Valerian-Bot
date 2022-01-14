@@ -11,7 +11,7 @@ module.exports = {
     name: "slowmode",
     category: "Moderation",
     aliases: [ 'slow' ],
-    description: "Slowmode Command",
+    description: "SlowMode Command",
     args: false,
     usage: ``,
     permission: [],
@@ -79,7 +79,7 @@ module.exports = {
         message.channel.setRateLimitPerUser(raw)
 
         let embed = new MessageEmbed()
-            .setTitle('**Slowmode Command**')
+            .setTitle('**SlowMode Command**')
             .setDescription(`Slowmode was set on ${raw} seconds`)
             .setColor(embedSuccess)
 

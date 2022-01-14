@@ -9,10 +9,10 @@ const { MessageEmbed } = require("discord.js");
 
 
 module.exports = {
-    name: "ban",
+    name: "bansave",
     category: "Moderation",
     aliases: [],
-    description: "Ban Command",
+    description: "Ban Save Command",
     args: false,
     usage: ``,
     permission: [],
@@ -25,23 +25,23 @@ module.exports = {
         if (!reason) reason = "None";
 
         if (!message.member.permissions.has("BAN_MEMBERS")) {
-        let embed = new MessageEmbed()
-            .setTitle('**Error Occurred**')
-            .setDescription('You don`t have permission to use this command')
-            .setColor(embedError)
+            let embed = new MessageEmbed()
+                .setTitle('**Error Occurred**')
+                .setDescription('You don`t have permission to use this command')
+                .setColor(embedError)
 
-        return message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
-            setTimeout(() => msg.delete(), 120000)});
+            return message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
+                setTimeout(() => msg.delete(), 120000)});
         };
 
         if (!args.length) {
-        let embed = new MessageEmbed()
-            .setTitle('**Error Occurred**')
-            .setDescription('Please Mention Somebody to Ban')
-            .setColor(embedError)
+            let embed = new MessageEmbed()
+                .setTitle('**Error Occurred**')
+                .setDescription('Please Mention Somebody to Ban')
+                .setColor(embedError)
 
-        return message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
-            setTimeout(() => msg.delete(), 120000)});
+            return message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
+                setTimeout(() => msg.delete(), 120000)});
         }
     
 

@@ -32,7 +32,7 @@ module.exports = {
 			message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
 			setTimeout(() => msg.delete(), 120000)});
   
-			} else {
+		} else {
   
 			message.delete()
   
