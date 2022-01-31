@@ -8,9 +8,9 @@ const { MessageEmbed } = require("discord.js");
 // command \\
 
 module.exports = {
-    name: "F",
+    name: "f",
     category: "Fun",
-    aliases: ['f'],
+    aliases: [],
     description: "F in Chat Command",
     args: false,
     usage: "",
@@ -29,12 +29,12 @@ module.exports = {
 
         const Index = Math.floor(Math.random() * links.length);
         
-        let embed = new MessageEmbed()
+        const embed = new MessageEmbed()
             .setTitle('**F in Chat Command**')
             .setImage(links[Index])
             .setColor(embedNeutral)
             .setTimestamp()
-            .setFooter("@" + message.author.tag, message.author.displayAvatarURL({dynamic : true}))
+            .setFooter(`@${message.author.tag}`, message.author.displayAvatarURL({dynamic : true}))
 
         message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
             setTimeout(() => msg.delete(), 120000)});

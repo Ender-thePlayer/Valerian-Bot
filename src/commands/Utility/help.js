@@ -25,10 +25,12 @@ module.exports = {
         if (!res) p = prefix
         else p = res.prefix;
 
-        let embed = new MessageEmbed()
-            .setColor(embedNeutral)
+        const embed = new MessageEmbed()
             .setTitle('**Help Command**')
-            .setDescription(`My prefix on this server is \`\`${p}\`\`. \n To find more help about a specific command, type \`\`${p}<command>\`\`, replacing \`\`<command>\`\` with one of the commands listed below. Type \`\`${p}aliases\`\` for a list of shortcuts for many of these commands. [⠀](https://www.youtube.com/watch?v=dQw4w9WgXcQ)`)
+            .setDescription(`My prefix on this server is \`\`${p}\`\`. \n To find more help about a specific command, type \`\`${p}help <command>\`\`, replacing \`\`<command>\`\` with one of the commands listed below. Type \`\`${p}aliases\`\` for a list of shortcuts for many of these commands. [⠀](https://www.youtube.com/watch?v=dQw4w9WgXcQ)`)
+            .setColor(embedNeutral)
+            .setTimestamp()
+            .setFooter(`@${message.author.tag}`, message.author.displayAvatarURL({dynamic : true}))
             .addFields(
                 { name: 'Utility Commands [6]', value: '```\nabout\naliases\nchangelogs\nhelp\ninfo\nping```', inline: true },
                 { name: 'Fun Commands [6]', value: '```\n8ball\navatar\nf\nhowgay\nmeme\nrickroll```', inline: true },
@@ -36,9 +38,8 @@ module.exports = {
                 { name: 'Guild Commands [3]', value: '```\nserverinfo\nticket\nuserinfo```', inline: true },
                 { name: 'Config Commands [1]', value: '```\nsetprefix```', inline: true },
             )
-            .setTimestamp()
-            .setFooter("@" + message.author.tag, message.author.displayAvatarURL({dynamic : true}))
 
         message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
             setTimeout(() => msg.delete(), 120000)});
-}};
+    }
+};

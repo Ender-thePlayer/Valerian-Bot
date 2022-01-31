@@ -34,12 +34,12 @@ module.exports = {
 
         const Index = Math.floor(Math.random() * links.length);
 
-        let embed = new MessageEmbed()
+        const embed = new MessageEmbed()
             .setTitle('**RickRoll Command**')
             .setImage(links[Index])
             .setColor(embedNeutral)
             .setTimestamp()
-            .setFooter("@" + message.author.tag, message.author.displayAvatarURL({dynamic : true}))
+            .setFooter(`@${message.author.tag}`, message.author.displayAvatarURL({dynamic : true}))
 
         message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
             setTimeout(() => msg.delete(), 120000)});

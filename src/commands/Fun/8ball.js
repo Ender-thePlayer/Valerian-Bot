@@ -18,17 +18,16 @@ module.exports = {
     owner: false,
     execute: async (message, args, client, prefix) => {
 
-        let embed = new MessageEmbed()
-            .setTitle('**Error Occurred**')
-            .setDescription('Please mention a Question to Respond')
-            .setColor(embedError)
-
         if (!args[0]) {
-            return message.channel.send( { embeds: [embed] }).then(setTimeout(() => message.delete())).then(msg =>{
-                    setTimeout(() => msg.delete(), 120000)});
+            const embed = new MessageEmbed()
+                .setTitle('**Error Occurred**')
+                .setDescription('Please ask a question!')
+                .setColor(embedError)
+                
+            return message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
+                setTimeout(() => msg.delete(), 120000)});
         
         } else {
-
             const responses = [
                 "it's certain.",
                 "it's decidedly so.",
@@ -54,14 +53,14 @@ module.exports = {
  
             const Index = Math.floor(Math.random() * responses.length);
             
-            let question = args.slice().join(" ")
+            const question = args.slice().join(" ")
 
-            let embed = new MessageEmbed()
+            const embed = new MessageEmbed()
                 .setTitle('**8ball Command**')
-                .addField(`You Asked: ${question}`, `My response is ${responses[Index]}`)
                 .setColor(embedNeutral)
                 .setTimestamp()
                 .setFooter(`@${message.author.tag}`, message.author.displayAvatarURL({dynamic : true}))
+                .addField(`You Asked: ${question}`, `My response is ${responses[Index]}`)
 
             message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
                 setTimeout(() => msg.delete(), 120000)});

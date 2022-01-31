@@ -20,7 +20,6 @@ module.exports = {
     execute: async (message, args, client, prefix) => {
 
         redditFetch({
-
             subreddit: 'memes',
             sort: 'hot',
             allowNSFW: false,
@@ -29,13 +28,13 @@ module.exports = {
             allowVideo: true
             
         }).then((post) => {
-            let embed = new MessageEmbed()
+            const embed = new MessageEmbed()
             .setTitle('**Meme Command**')
             .setDescription(`${post.title}`)
             .setImage(`${post.url}`)
             .setColor(embedNeutral)
             .setTimestamp()
-            .setFooter("@" + message.author.tag, message.author.displayAvatarURL({dynamic : true}))
+            .setFooter(`@${message.author.tag}`, message.author.displayAvatarURL({dynamic : true}))
 
         message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
             setTimeout(() => msg.delete(), 120000)})})

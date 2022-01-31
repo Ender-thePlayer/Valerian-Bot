@@ -10,7 +10,7 @@ const moment = require('moment');
 
 module.exports = {
     name: "serverinfo",
-    category: "Moderation",
+    category: "Guild",
     aliases: [ 'si' ],
     description: "ServerInfo Command",
     args: false,
@@ -19,11 +19,11 @@ module.exports = {
     owner: false,
     execute: async (message, args, client) => {
 
-        let embed = new MessageEmbed()
-            .setThumbnail(message.guild.iconURL({dynamic : true}))
-            .setColor(embedNeutral)
+        const embed = new MessageEmbed()
             .setTitle(`**ServerInfo Command**`)
-            .setFooter("@" + message.author.tag, message.author.displayAvatarURL({dynamic : true}))
+            .setColor(embedNeutral)
+            .setThumbnail(message.guild.iconURL({dynamic : true}))
+            .setFooter(`@${message.author.tag}`, message.author.displayAvatarURL({dynamic : true}))
             .addFields(
         
                 {

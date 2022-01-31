@@ -36,10 +36,10 @@ module.exports = async (client, interaction) => {
 
     let embed = new MessageEmbed()
         .setTitle('**Ticket Command**')
-        .addField(`Hello There!`, `The staff will be here as soon as possible, mean-while tell us about your issue! Thank You!`)
         .setColor(embedNeutral)
         .setTimestamp()
         .setFooter(`@${interaction.user.tag}`, interaction.user.displayAvatarURL({dynamic : true}))
+        .addField(`Hello There!`, `The staff will be here as soon as possible, mean-while tell us about your issue! Thank You!`)
 
     let tktsucEmbed = new MessageEmbed()
         .setTitle('**Ticket Command**')

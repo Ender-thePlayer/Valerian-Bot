@@ -25,7 +25,7 @@ execute: async (message, args, client) => {
     if (!res) p = prefix
     else p = res.prefix;
 
-	let embed =  new MessageEmbed()
+	const embed =  new MessageEmbed()
 		.setColor(embedNeutral)
 		.setTitle('**Aliases Command**')
 		.setDescription('Thse are the aliases! In the left are the commands and in the right are the aliases.')
@@ -36,7 +36,7 @@ execute: async (message, args, client) => {
 			{ name: 'Moderation Commands: ', value: `${p}clear - \`\`purge\`\`\n${p}slowmode - \`\`slow\`\``, inline: true },
 		)
 		.setTimestamp()
-		.setFooter("@" + message.author.tag, message.author.displayAvatarURL({dynamic : true}))
+		.setFooter(`@${message.author.tag}`, message.author.displayAvatarURL({dynamic : true}))
 
 	message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
 		setTimeout(() => msg.delete(), 120000)});

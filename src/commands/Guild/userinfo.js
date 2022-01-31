@@ -10,7 +10,7 @@ const moment = require('moment');
 
 module.exports = {
     name: "userinfo",
-    category: "Moderation",
+    category: "Guild",
     aliases: [ 'ui' ],
     description: "UserInfo Command",
     args: false,
@@ -21,11 +21,11 @@ module.exports = {
 
         const member =  message.mentions.members.first() || message.guild.members.cache.get(args[0]) || message.member;
 
-        let embed = new MessageEmbed()
-            .setThumbnail(member.user.displayAvatarURL({dynamic: true}))
-            .setColor(embedNeutral)
+        const embed = new MessageEmbed()
             .setTitle(`**UserInfo Command**`)
-            .setFooter("@" + message.author.tag, message.author.displayAvatarURL({dynamic : true}))
+            .setColor(embedNeutral)
+            .setThumbnail(member.user.displayAvatarURL({dynamic: true}))
+            .setFooter(`@${message.author.tag}`, message.author.displayAvatarURL({dynamic : true}))
             .addFields(
 
                 {

@@ -23,9 +23,10 @@ module.exports = {
 		if (args[1]) {
 			const embed = new MessageEmbed()
 				.setTitle('**Error Occurred**')
-				.setDescription("You can't tag 2 persons!")
+				.setDescription("You can't mention two users!")
 				.setColor(embedError)
-			return message.reply({ embeds: [embed] });
+            return message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
+                setTimeout(() => msg.delete(), 120000)});
 		}
 
 		var arr = [];
@@ -34,12 +35,12 @@ module.exports = {
 			var r = Math.floor(Math.random() * 100) + 1;
 			if(arr.indexOf(r) === -1) arr.push(r)};
 
-		let embed = new MessageEmbed()
+		const embed = new MessageEmbed()
 			.setTitle('**HowGay Command**')
-			.addField(`${member.user.tag} is:`, `${arr}% gay!`)
 			.setColor(embedNeutral)
 			.setTimestamp()
 			.setFooter("@" + message.author.tag, message.author.displayAvatarURL({dynamic : true}))
+			.addField(`${member.user.tag} is:`, `${arr}% gay!`)
 
 		message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
 			setTimeout(() => msg.delete(), 120000)});

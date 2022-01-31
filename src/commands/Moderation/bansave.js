@@ -27,7 +27,7 @@ module.exports = {
         if (!message.member.permissions.has("BAN_MEMBERS")) {
             let embed = new MessageEmbed()
                 .setTitle('**Error Occurred**')
-                .setDescription('You don`t have permission to use this command')
+                .setDescription('You don`t have permission to use this command!')
                 .setColor(embedError)
 
             return message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
@@ -37,13 +37,12 @@ module.exports = {
         if (!args.length) {
             let embed = new MessageEmbed()
                 .setTitle('**Error Occurred**')
-                .setDescription('Please Mention Somebody to Ban')
+                .setDescription('Please mention somebody to ban!')
                 .setColor(embedError)
 
             return message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
                 setTimeout(() => msg.delete(), 120000)});
         }
-    
 
         if (!mentionMember) {
             let embed = new MessageEmbed()
@@ -67,10 +66,12 @@ module.exports = {
 
         mentionMember.ban({ reason: reason })
 
-        let embed = new MessageEmbed()
-            .setTitle('**Ban Command**')
-            .setDescription(`${target} was banned saving messages with the reason: **${reason}**!`)
+        const embed = new MessageEmbed()
+            .setTitle('**BanSave Command**')
+            .setDescription(`${target} was banned while saving messages with the reason: **${reason}**!`)
             .setColor(embedSuccess)
+            .setTimestamp()
+            .setFooter(`@${message.author.tag}`, message.author.displayAvatarURL({dynamic : true}))
 
         message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
             setTimeout(() => msg.delete(), 120000)})

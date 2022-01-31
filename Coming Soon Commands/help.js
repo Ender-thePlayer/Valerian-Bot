@@ -10,9 +10,9 @@ const { MessageEmbed, MessageActionRow, MessageButton} = require("discord.js");
 // command \\
 
 module.exports = {
-    name: "help",
+    name: "ohelp",
     category: "Utility",
-    aliases: ['h'],
+    aliases: ['ho'],
     description: "Help Command",
     args: false,
     usage: ``,

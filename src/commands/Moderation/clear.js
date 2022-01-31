@@ -19,9 +19,9 @@ module.exports = {
     execute: async (message, args, client) => {
 
         if (!message.member.permissions.has("MANAGE_MESSAGES")) {
-            let embed = new MessageEmbed()
+            const embed = new MessageEmbed()
                 .setTitle('**Error Occurred**')
-                .setDescription('You don`t have permission to use this command')
+                .setDescription('You don`t have permission to use this command!')
                 .setColor(embedError)
 
             return message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
@@ -32,10 +32,12 @@ module.exports = {
             return message.channel.messages.fetch({ limit: 10,before:message.id }).then(messages => {
                 message.channel.bulkDelete(messages);
 
-            let embed = new MessageEmbed()
+            const embed = new MessageEmbed()
                 .setTitle('**Clear Command**')
                 .setDescription(`You deleted 10 messages!`)
                 .setColor(embedSuccess)
+                .setTimestamp()
+                .setFooter(`@${message.author.tag}`, message.author.displayAvatarURL({dynamic : true}))
 
             return message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
                 setTimeout(() => msg.delete(), 120000)});
@@ -43,10 +45,9 @@ module.exports = {
         };
 
         if(isNaN(args[0])){
-
-            let embed = new MessageEmbed()
+            const embed = new MessageEmbed()
                 .setTitle('**Error Occurred**')
-                .setDescription('This isn`t a valid number')
+                .setDescription('This isn`t a valid number!')
                 .setColor(embedError)
 
             return message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
@@ -54,7 +55,7 @@ module.exports = {
         }
 
         if(args[0] > 100) {
-            let embed = new MessageEmbed()
+            const embed = new MessageEmbed()
                 .setTitle('**Error Occurred**')
                 .setDescription('You cannot delete more than 100 messages nat a time!')
                 .setColor(embedError)
@@ -65,36 +66,37 @@ module.exports = {
 
 
         if(args[0] < 1) {
-            let embed = new MessageEmbed()
-            .setTitle('**Error Occurred**')
-            .setDescription('You cannot delete less than 1 message!')
-            .setColor(embedError)
+            const embed = new MessageEmbed()
+                .setTitle('**Error Occurred**')
+                .setDescription('You cannot delete less than 1 message!')
+                .setColor(embedError)
             
-        message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
-            setTimeout(() => msg.delete(), 120000)});
+            return message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
+                setTimeout(() => msg.delete(), 120000)});
         }
 
-        
         message.channel.messages.fetch({ limit: args[0],before:message.id }).then(async messages => {
             message.channel.bulkDelete(messages);
 
             let embed = new MessageEmbed()
                 .setTitle('**Clear Command**')
-                .setDescription(`You deleted ${args} messages!`)
+                .setDescription(`Cleared ${args} messages`)
                 .setColor(embedSuccess)
+                .setTimestamp()
+                .setFooter(`@${message.author.tag}`, message.author.displayAvatarURL({dynamic : true}))
 
             let embedtwo = new MessageEmbed()
                 .setTitle('**Clear Command**')
-                .setDescription(`You deleted 1 message!`)
+                .setDescription(`Cleared 1 message`)
                 .setColor(embedSuccess)
+                .setTimestamp()
+                .setFooter(`@${message.author.tag}`, message.author.displayAvatarURL({dynamic : true}))
 
             if(args[0] == 1) {
-
                 return message.reply( { embeds: [embedtwo] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
                     setTimeout(() => msg.delete(), 120000)})
             
             } else {
-
                 return message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
                     setTimeout(() => msg.delete(), 120000)})
             }        

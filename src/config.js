@@ -17,7 +17,7 @@ module.exports = {
       host: "disbotlistlavalink.ml",
       port: 443,
       password: "LAVA",
-      id: "BbVb Core",
+      id: "Lava Core",
       retryDelay: 3000,
       secure: true
     

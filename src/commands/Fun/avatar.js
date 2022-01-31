@@ -21,9 +21,10 @@ module.exports = {
         if (args[1]) {
 			const embed = new MessageEmbed()
 				.setTitle('**Error Occurred**')
-				.setDescription("You can't tag two users!")
+				.setDescription("You can't mention two users!")
 				.setColor(embedError)
-			return message.reply({ embeds: [embed] });
+            return message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
+                setTimeout(() => msg.delete(), 120000)});
 		}
 
         let member = message.mentions.members.first() || message.member;

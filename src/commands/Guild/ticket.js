@@ -9,8 +9,8 @@ const { MessageEmbed, MessageActionRow, MessageButton} = require("discord.js");
 
 module.exports = {
     name: "ticket",
-    category: "Moderation",
-    aliases: [ 'tt', 'newticket' ],
+    category: "Guild",
+    aliases: [ 'tt', 'new' ],
     description: "Ticket Command",
     args: false,
     usage: ``,
@@ -18,13 +18,12 @@ module.exports = {
     owner: false,
     execute: async (message, args, client) => {
 
-        let tktEmbed = new MessageEmbed()
+        const tktEmbed = new MessageEmbed()
             .setTitle('**Tickets Command**')
-            .addField(`How to use the command:`, `> Click on the button below saying 'Create Ticket'\n> Once the ticket is made, you'll be able to type in there!`)
             .setColor(embedNeutral)
             .setTimestamp()
             .setFooter(`@${message.author.tag}`, message.author.displayAvatarURL({dynamic : true}))
-
+            .addField(`How to use the command:`, `> Click on the button below saying 'Create Ticket'\n> Once the ticket is made, you'll be able to type in there!`)
 
         let bt = new MessageActionRow().addComponents(
             new MessageButton()
