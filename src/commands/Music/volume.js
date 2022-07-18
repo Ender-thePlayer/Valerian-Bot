@@ -16,7 +16,7 @@ module.exports = {
     sameVoiceChannel: true,
 	execute: async (message, args, client, prefix) => {
   
-		const player = client.manager.get(message.guild.id);
+		const player = message.client.manager.get(message.guild.id);
 
         if (!player.queue.current) {
             let thing = new MessageEmbed()
@@ -26,11 +26,10 @@ module.exports = {
             return message.reply({embeds: [thing]});
 		}
 		
-		const volumeEmoji = client.emoji.volumehigh;
 
 		if (!args.length) {
 			let thing = new MessageEmbed()
-				.setDescription(`${volumeEmoji} The current volume is: **${player.volume}%**`)
+				.setDescription(`The current volume is: **${player.volume}%**`)
 				.setColor(embedNeutral)
 				.setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
 		
@@ -50,18 +49,16 @@ module.exports = {
 		player.setVolume(volume);
 
 		if (volume > player.volume) {
-			var emojivolume = client.emoji.volumehigh;
 			let thing = new MessageEmbed()
-				.setDescription(`${emojivolume} Volume set to: **${volume}%**`)
+				.setDescription(`Volume set to: **${volume}%**`)
 				.setColor(embedNeutral)
 				.setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
 
 			return message.reply({embeds: [thing]});
 		
 		} else if (volume < player.volume) {
-			var emojivolume = message.client.emoji.volumelow;
 			let thing = new MessageEmbed()
-				.setDescription(`${emojivolume} Volume set to: **${volume}%**`)
+				.setDescription(`Volume set to: **${volume}%**`)
 				.setColor(embedNeutral)
 				.setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
 		
@@ -69,7 +66,7 @@ module.exports = {
 		
 		} else {
 			let thing = new MessageEmbed()
-				.setDescription(`${volumeEmoji} Volume set to: **${volume}%**`)
+				.setDescription(`Volume set to: **${volume}%**`)
 				.setColor(embedNeutral)
 				.setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
 

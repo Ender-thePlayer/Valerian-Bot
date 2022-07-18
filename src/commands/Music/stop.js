@@ -15,7 +15,7 @@ module.exports = {
     sameVoiceChannel: true,
 	execute: async (message, client) => {
   
-        const player = client.manager.get(message.guild.id);
+        const player = message.client.manager.get(message.guild.id);
 
         if (!player.queue.current) {
             let thing = new MessageEmbed()
@@ -33,10 +33,8 @@ module.exports = {
         player.stop();
         player.queue.clear();
 
-        const emojistop = client.emoji.stop;
-
         let thing = new MessageEmbed()
-            .setDescription(`${emojistop} Stopped the music`)
+            .setDescription(`Stopped the music`)
             .setColor(embedNeutral)
             .setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
 

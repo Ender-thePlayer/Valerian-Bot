@@ -15,7 +15,7 @@ module.exports = {
     sameVoiceChannel: true,
 	execute: async (message, args, client) => {
   
-		const player = client.manager.get(message.guild.id);
+		const player = message.client.manager.get(message.guild.id);
 
         if (!player.queue.current) {
             let thing = new MessageEmbed()
@@ -39,10 +39,8 @@ module.exports = {
         const song = player.queue[position]
             player.queue.remove(position);
 
-            const emojieject = client.emoji.remove;
-
             let thing = new MessageEmbed()
-                .setDescription(`${emojieject} Removed\n[${song.title}](${song.uri})`)
+                .setDescription(` Removed\n[${song.title}](${song.uri})`)
                 .setColor(embedNeutral)
                 .setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
 

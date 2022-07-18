@@ -18,7 +18,7 @@ module.exports = {
     sameVoiceChannel: true,
     execute: async (message, args, client) => {
   
-		const player = client.manager.get(message.guild.id);
+		const player = message.client.manager.get(message.guild.id);
 
         if (!player.queue.current) {
             let thing = new MessageEmbed()
@@ -32,16 +32,13 @@ module.exports = {
         const position = player.position;
         const duration = player.queue.current.duration;
 
-        const emojiforward = client.emoji.forward;
-        const emojirewind = client.emoji.rewind;
-
         const song = player.queue.current;
         
         if (time <= duration) {
             if (time > position) {
                 player.seek(time);
                 let thing = new MessageEmbed()
-                    .setDescription(`${emojiforward} **Forward**\n[${song.title}](${song.uri})\n\`${convertTime(time)} / ${convertTime(duration)}\``)
+                    .setDescription(`**Forward**\n[${song.title}](${song.uri})\n\`${convertTime(time)} / ${convertTime(duration)}\``)
                     .setColor(embedNeutral)
                     .setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
                 
@@ -50,7 +47,7 @@ module.exports = {
             } else {
                 player.seek(time);
                 let thing = new MessageEmbed()
-                    .setDescription(`${emojirewind} **Rewind**\n[${song.title}](${song.uri})\n\`${convertTime(time)} / ${convertTime(duration)}\``)
+                    .setDescription(`**Rewind**\n[${song.title}](${song.uri})\n\`${convertTime(time)} / ${convertTime(duration)}\``)
                     .setColor(embedNeutral)
                     .setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
                     

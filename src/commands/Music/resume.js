@@ -16,7 +16,7 @@ module.exports = {
     sameVoiceChannel: true,
     execute: async (message, client) => {
   
-		const player = client.manager.get(message.guild.id);
+        const player = message.client.manager.get(message.guild.id);
         const song = player.queue.current;
 
         if (!player.queue.current) {
@@ -27,11 +27,9 @@ module.exports = {
         return message.reply({embeds: [thing]});
         }
 
-        const emojiresume = client.emoji.resume;
-
         if (!player.paused) {
             let thing = new MessageEmbed()
-                .setDescription(`${emojiresume} The player is already **resumed**.`)
+                .setDescription(`The player is already **resumed**.`)
                 .setColor(embedError);
 
             return message.reply({embeds: [thing]});
@@ -40,7 +38,7 @@ module.exports = {
         player.pause(false);
 
         let thing = new MessageEmbed()
-            .setDescription(`${emojiresume} **Resumed**\n[${song.title}](${song.uri})`)
+            .setDescription(`**Resumed**\n[${song.title}](${song.uri})`)
             .setColor(embedNeutral)
             .setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
 

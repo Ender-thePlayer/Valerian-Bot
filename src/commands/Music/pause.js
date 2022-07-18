@@ -25,11 +25,9 @@ module.exports = {
         return message.reply({embeds: [thing]});
         }
 
-        const emojipause = client.emoji.pause;
-
         if (player.paused) {
             let thing = new MessageEmbed()
-                .setDescription(`${emojipause} The player is already paused.`)
+                .setDescription(`The player is already paused.`)
                 .setColor(embedError)
 
             return message.reply({embeds: [thing]});
@@ -40,7 +38,7 @@ module.exports = {
         const song = player.queue.current;
 
         let thing = new MessageEmbed()
-            .setDescription(`${emojipause} **Paused**\n[${song.title}](${song.uri})`)
+            .setDescription(`**Paused**\n[${song.title}](${song.uri})`)
             .setColor(embedNeutral)
             .setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
 

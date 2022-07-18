@@ -16,7 +16,7 @@ module.exports = {
     sameVoiceChannel: true,
     execute: async (message, args, client) => {
   
-		const player = client.manager.get(message.guild.id);
+		const player = message.client.manager.get(message.guild.id);;
 
         if (!player.queue.current) {
             let thing = new MessageEmbed()
@@ -39,10 +39,8 @@ module.exports = {
         player.queue.remove(0, position - 1);
         player.stop();
 		
-		const emojijump = client.emoji.jump;
-
 		let thing = new MessageEmbed()
-            .setDescription(`${emojijump} Forward **${position}** Songs`)
+            .setDescription(`Forward **${position}** Songs`)
             .setColor(embedNeutral)
             .setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
 

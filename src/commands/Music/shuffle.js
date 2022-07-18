@@ -15,7 +15,7 @@ module.exports = {
     sameVoiceChannel: true,
  execute: async (message, client) => {
     
-		const player = client.manager.get(message.guild.id);
+		const player = message.client.manager.get(message.guild.id);
 
         if (!player.queue.current) {
             let thing = new MessageEmbed()
@@ -27,10 +27,8 @@ module.exports = {
 
         player.queue.shuffle();
         
-        const emojishuffle = client.emoji.shuffle;
-
         let thing = new MessageEmbed()
-            .setDescription(`${emojishuffle} Shuffled the queue`)
+            .setDescription(`Shuffled the queue`)
             .setColor(embedNeutral)
             .setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
 
