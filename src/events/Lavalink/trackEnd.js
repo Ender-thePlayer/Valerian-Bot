@@ -11,4 +11,4 @@ module.exports = async (client, player, track, payload) => {
             res = await player.search(search, requester);
             player.queue.add(res.tracks[2]);
         }
-    }
+}

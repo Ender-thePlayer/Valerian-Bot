@@ -1,13 +1,5 @@
-// consts \\
-
 const { embedNeutral } = require("../../config.js");
-const { embedError } = require("../../config.js");
-const { embedSuccess } = require("../../config.js");
-const { prefix } = require("../../config.js");
 const { MessageEmbed} = require("discord.js");
-const moment = require('moment');
-
-// events \\
 
 module.exports = async (guildMemberRemove, member) => {
 

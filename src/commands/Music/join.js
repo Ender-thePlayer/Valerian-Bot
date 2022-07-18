@@ -1,10 +1,12 @@
 const { MessageEmbed } = require("discord.js");
+const { embedError } = require("../../config.js");
+const { embedNeutral } = require("../../config.js");
 
 module.exports = {
 	name: "join",
     aliases: ["j"],
     category: "Music",
-    description: "Join voice channel",
+    description: "Make the bot to join in a voice channel.",
     args: false,
     usage: "",
     permission: [],
@@ -12,11 +14,9 @@ module.exports = {
     player: false,
     inVoiceChannel: true,
     sameVoiceChannel: false,
- execute: async (message, args, client, prefix) => {
+    execute: async (message) => {
   
-	    	const { channel } = message.member.voice;
-
-        const emojiJoin = message.client.emoji.join;
+	    const { channel } = message.member.voice;
 
         if(!message.guild.me.voice.channel) {
             
@@ -31,15 +31,18 @@ module.exports = {
             player.connect();
 
             let thing = new MessageEmbed()
-                .setColor(client.embedColor)
-                .setDescription(`${emojiJoin} **Join the voice channel**\nJoined <#${channel.id}> and bound to <#${message.channel.id}>`)
-             return message.reply({embeds: [thing]});
+                .setDescription(`**Join the voice channel**\nJoined <#${channel.id}> and bound to <#${message.channel.id}>`)
+                .setColor(embedNeutral)
+                .setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
+
+            return message.reply({embeds: [thing]});
 
         } else if (message.guild.me.voice.channel !== channel) {
 
             let thing = new MessageEmbed()
-                .setColor("RED")
-                .setDescription(`You must be in the same channel as ${message.client.user}`);
+                .setDescription(`You must be in the same channel as ${message.client.user}`)
+                .setColor(embedError);
+
             return message.reply({embeds: [thing]});
         }
         

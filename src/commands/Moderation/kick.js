@@ -1,20 +1,15 @@
-// consts \\
-
-const { embedNeutral } = require("../../config.js");
 const { embedError } = require("../../config.js");
-const { embedSuccess } = require("../../config.js");const { prefix } = require("../../config.js");
+const { embedSuccess } = require("../../config.js")
 const { MessageEmbed } = require("discord.js");
-
-// command \\
 
 module.exports = {
     name: "kick",
     category: "Moderation",
     aliases: [],
-    description: "Kick Command",
+    description: "Kick a user from the server.",
     args: false,
-    usage: ``,
-    permission: [],
+    usage: `<user> [reason]`,
+    permission: ['KICK_MEMBERS'],
     owner: false,
     execute: async (message, args, client) => {
 
@@ -23,55 +18,37 @@ module.exports = {
         let reason = args.slice(1).join(" "); 
         if (!reason) reason = "None";
 
-        if (!message.member.permissions.has("KICK_MEMBERS")) {
-            let embed = new MessageEmbed()
-                .setTitle('**Error Occurred**')
-                .setDescription('You don`t have permission to use this command!')
-                .setColor(embedError)
-            return message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
-                setTimeout(() => msg.delete(), 120000)});
-        };
-
         if (!args.length) {
             let embed = new MessageEmbed()
-                .setTitle('**Error Occurred**')
                 .setDescription('Please mention somebody to kick!')
                 .setColor(embedError)
 
-            return message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
-                setTimeout(() => msg.delete(), 120000)});
+            return message.reply( { embeds: [embed] })
         }
     
         if (!mentionMember) {
             let embed = new MessageEmbed()
-                .setTitle('**Error Occurred**')
                 .setDescription('That isn`t a user!')
                 .setColor(embedError)
 
-            return message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
-                setTimeout(() => msg.delete(), 120000)});
+            return message.reply( { embeds: [embed] })
         };
 
         if(!mentionMember.kickable) {
             let embed = new MessageEmbed()
-                .setTitle('**Error Occurred**')
                 .setDescription(`This user is a moderator!`)
                 .setColor(embedError)
 
-            return message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
-                    setTimeout(() => msg.delete(), 120000)});
+            return message.reply( { embeds: [embed] })
         };
 
         mentionMember.kick({ reason: reason })
 
         const embed = new MessageEmbed()
-            .setTitle('**Kick Command**')
             .setDescription(`${target} was kicked with the reason: **${reason}**!`)
             .setColor(embedSuccess)
-            .setTimestamp()
-            .setFooter(`@${message.author.tag}`, message.author.displayAvatarURL({dynamic : true}))
+            .setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
 
-        message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
-            setTimeout(() => msg.delete(), 120000)})
+        message.reply( { embeds: [embed] })
     }
 }

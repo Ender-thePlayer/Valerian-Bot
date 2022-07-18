@@ -1,9 +1,11 @@
 const { MessageEmbed } = require("discord.js");
+const { embedNeutral } = require("../../config.js");
+const { embedError } = require("../../config.js");
 
 module.exports = {
   	name: "shuffle",
     category: "Music",
-    description: "Shuffle queue",
+    description: "Shuffle queue.",
     args: false,
     usage: "",
     permission: [],
@@ -11,24 +13,27 @@ module.exports = {
     player: true,
     inVoiceChannel: true,
     sameVoiceChannel: true,
- execute: async (message, args, client, prefix) => {
+ execute: async (message, client) => {
     
 		const player = client.manager.get(message.guild.id);
 
         if (!player.queue.current) {
             let thing = new MessageEmbed()
-                .setColor("RED")
-                .setDescription("There is no music playing.");
-            return message.reply({embeds: [thing]});
+                .setDescription("There is no music playing.")
+                .setColor(embedError);
+
+        return message.reply({embeds: [thing]});
         }
+
         player.queue.shuffle();
         
         const emojishuffle = client.emoji.shuffle;
 
         let thing = new MessageEmbed()
             .setDescription(`${emojishuffle} Shuffled the queue`)
-            .setColor(client.embedColor)
-            .setTimestamp()
+            .setColor(embedNeutral)
+            .setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
+
         return message.reply({embeds: [thing]}).catch(error => client.logger.log(error, "error"));
 	
     }

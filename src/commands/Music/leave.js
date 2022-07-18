@@ -1,10 +1,11 @@
 const { MessageEmbed } = require("discord.js");
+const { embedNeutral } = require("../../config.js");
 
 module.exports = {
 	name: "leave",
     aliases: ["dc"],
     category: "Music",
-    description: "Leave voice channel",
+    description: "Make the bot to leave the voice channel.",
     args: false,
     usage: "",
     permission: [],
@@ -12,18 +13,17 @@ module.exports = {
     player: true,
     inVoiceChannel: true,
     sameVoiceChannel: true,
- execute: async (message, args, client, prefix) => {
+    execute: async (message) => {
        
         const player = message.client.manager.get(message.guild.id);
-
-        const emojiLeave = message.client.emoji.leave;
 
         player.destroy();
         
         let thing = new MessageEmbed()
-            .setColor(message.client.embedColor)
-            .setDescription(`${emojiLeave} **Leave the voice channel**\nThank you for using ${message.client.user.username}!`)
-          return message.reply({embeds: [thing]});
+            .setDescription(`**Leave the voice channel**\nThank you for using **${message.client.user.username}**!`)
+            .setColor(embedNeutral)
+
+        return message.reply({embeds: [thing]});
 	
     }
 };

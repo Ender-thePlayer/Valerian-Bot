@@ -1,7 +1,8 @@
-
-const { Client, Message, MessageEmbed, MessageButton, MessageActionRow } = require("discord.js");
+const { MessageEmbed, MessageButton, MessageActionRow } = require("discord.js");
 const pms = require("pretty-ms");
 const load = require("lodash");
+const { embedNeutral } = require("../../config.js");
+const { embedError } = require("../../config.js");
 
 module.exports = {
     name: "queue",
@@ -15,22 +16,25 @@ module.exports = {
     player: true,
     inVoiceChannel: false,
     sameVoiceChannel: false,
-   execute: async (message, args, client, prefix) => {
+    execute: async (message, client) => {
    
-     try {
-        const player = client.manager.get(message.guild.id);
-            if(!player) return message.channel.send({ embeds: [new MessageEmbed().setColor(client.embedColor).setTimestamp().setDescription(`Nothing is playing right now.`)]});
+        try {
+            const player = message.client.manager.get(message.guild.id);
+
+            if(!player) return message.channel.send({ embeds: [new MessageEmbed().setColor(embedError).setDescription(`Nothing is playing right now.`)]});
             
-            if(!player.queue) return message.channel.send({ embeds: [new MessageEmbed().setColor(client.embedColor).setTimestamp().setDescription(`Nothing is playing right now.`)]});
+            if(!player.queue) return message.channel.send({ embeds: [new MessageEmbed().setColor(embedError).setDescription(`Nothing is playing right now.`)]});
             
             if(player.queue.length === "0" || !player.queue.length) {
                 const embed = new MessageEmbed()
-                .setColor(client.embedColor)
-                .setDescription(`Now playing [${player.queue.current.title}](${player.queue.current.uri}) • \`[ ${pms(player.position)} / ${pms(player.queue.current.duration)} ]\` • [${player.queue.current.requester}]`)
+                    .setColor(embedNeutral)
+                    .setDescription(`Now playing [${player.queue.current.title}](${player.queue.current.uri}) • \`[ ${pms(player.position)} / ${pms(player.queue.current.duration)} ]\` • [${player.queue.current.requester}]`)
+                    .setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
 
-                await message.channel.send({
+                await message.reply({
                     embeds: [embed]
                 }).catch(() => {});
+
             } else {
                 const queuedSongs = player.queue.map((t, i) => `\`${++i}\` • [${t.title}](${t.uri}) • \`[ ${pms(t.duration)} ]\` • [${t.requester}]`);
 
@@ -40,45 +44,43 @@ module.exports = {
 
                 if(player.queue.size < 11) {
                     const embed = new MessageEmbed()
-                    .setColor(client.embedColor)
-                    .setDescription(`**Now playing**\n[${player.queue.current.title}](${player.queue.current.uri}) • \`[ ${pms(player.position)} / ${pms(player.queue.current.duration)} ]\` • [${player.queue.current.requester}]\n\n**Queued Songs**\n${pages[page]}`)
-                    .setTimestamp()
-                    .setFooter(`Page ${page + 1}/${pages.length}`, message.author.displayAvatarURL({ dynamic: true }))
-                    .setThumbnail(player.queue.current.thumbnail)
-                    .setTitle(`${message.guild.name} Queue`)
+                        .setDescription(`**Now playing**\n[${player.queue.current.title}](${player.queue.current.uri}) • \`[ ${pms(player.position)} / ${pms(player.queue.current.duration)} ]\` • [${player.queue.current.requester}]\n\n**Queued Songs**\n${pages[page]}\n${message.guild.name} Queue`)
+                        .setColor(embedNeutral)
+                        .setThumbnail(player.queue.current.thumbnail)
+                        .setFooter({text: `Requested by @${message.author.tag}\nPage ${page + 1}/${pages.length}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
 
-                    await message.channel.send({
+                    await message.reply({
                         embeds: [embed]
                     }).catch(() => {});
+
                 } else {
                     const embed2 = new MessageEmbed()
-                    .setColor(client.embedColor)
-                    .setDescription(`**Now playing**\n[${player.queue.current.title}](${player.queue.current.uri}) • \`[ ${pms(player.position)} / ${pms(player.queue.current.duration)} ]\` • [${player.queue.current.requester}]\n\n**Queued Songs**\n${pages[page]}`)
-                    .setTimestamp()
-                    .setFooter(`Page ${page + 1}/${pages.length}`, message.author.displayAvatarURL({ dynamic: true }))
-                    .setThumbnail(player.queue.current.thumbnail)
-                    .setTitle(`${message.guild.name} Queue`)
+                        .setDescription(`**Now playing**\n[${player.queue.current.title}](${player.queue.current.uri}) • \`[ ${pms(player.position)} / ${pms(player.queue.current.duration)} ]\` • [${player.queue.current.requester}]\n\n**Queued Songs**\n${pages[page]}\n${message.guild.name} Queue`)
+                        .setColor(embedNeutral)
+                        .setThumbnail(player.queue.current.thumbnail)
+                        .setFooter({text: `Requested by @${message.author.tag}\nPage ${page + 1}/${pages.length}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
+
 
                     const but1 = new MessageButton()
-                    .setCustomId("queue_cmd_but_1")
-                    .setEmoji("⏭️")
-                    .setStyle("PRIMARY")
+                        .setCustomId("queue_cmd_but_1")
+                        .setEmoji("⏭️")
+                        .setStyle("PRIMARY")
 
                     const but2 = new MessageButton()
-                    .setCustomId("queue_cmd_but_2")
-                    .setEmoji("⏮️")
-                    .setStyle("PRIMARY")
+                        .setCustomId("queue_cmd_but_2")
+                        .setEmoji("⏮️")
+                        .setStyle("PRIMARY")
 
                     const but3 = new MessageButton()
-                    .setCustomId("queue_cmd_but_3")
-                    .setEmoji("⏹️")
-                    .setStyle("DANGER")
+                        .setCustomId("queue_cmd_but_3")
+                        .setEmoji("⏹️")
+                        .setStyle("DANGER")
 
                     const row1 = new MessageActionRow().addComponents([
                         but2, but3, but1
                     ]);
 
-                    const msg = await message.channel.send({
+                    const msg = await message.reply({
                         embeds: [embed2],
                         components: [row1]
                     }).catch(() => {});
@@ -104,33 +106,31 @@ module.exports = {
                             page = page + 1 < pages.length ? ++page : 0;
 
                             const embed3 = new MessageEmbed()
-                            .setColor(client.embedColor)
-                            .setDescription(`**Now playing**\n[${player.queue.current.title}](${player.queue.current.uri}) • \`[ ${pms(player.position)} / ${pms(player.queue.current.duration)} ]\` • [${player.queue.current.requester}]\n\n**Queued Songs**\n${pages[page]}`)
-                            .setTimestamp()
-                            .setFooter(`Page ${page + 1}/${pages.length}`, message.author.displayAvatarURL({ dynamic: true }))
-                            .setThumbnail(player.queue.current.thumbnail)
-                            .setTitle(`${message.guild.name} Queue`)
+                                .setDescription(`**Now playing**\n[${player.queue.current.title}](${player.queue.current.uri}) • \`[ ${pms(player.position)} / ${pms(player.queue.current.duration)} ]\` • [${player.queue.current.requester}]\n\n**Queued Songs**\n${pages[page]}\n${message.guild.name} Queue`)
+                                .setColor(embedNeutral)
+                                .setThumbnail(player.queue.current.thumbnail)
+                                .setFooter({text: `Requested by @${message.author.tag}\nPage ${page + 1}/${pages.length}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
 
                             await msg.edit({
                                 embeds: [embed3],
                                 components: [row1]
                             }).catch(() => {});
+
                         } else if(button.customId === "queue_cmd_but_2") {
                             await button.deferUpdate().catch(() => {});
                             page = page > 0 ? --page : pages.length - 1;
 
                             const embed4 = new MessageEmbed()
-                            .setColor(client.embedColor)
-                            .setDescription(`**Now playing**\n[${player.queue.current.title}](${player.queue.current.uri}) • \`[ ${pms(player.position)} / ${pms(player.queue.current.duration)} ]\` • [${player.queue.current.requester}]\n\n**Queued Songs**\n${pages[page]}`)
-                            .setTimestamp()
-                            .setFooter(`Page ${page + 1}/${pages.length}`, message.author.displayAvatarURL({ dynamic: true }))
-                            .setThumbnail(player.queue.current.thumbnail)
-                            .setTitle(`${message.guild.name} Queue`)
+                                .setDescription(`**Now playing**\n[${player.queue.current.title}](${player.queue.current.uri}) • \`[ ${pms(player.position)} / ${pms(player.queue.current.duration)} ]\` • [${player.queue.current.requester}]\n\n**Queued Songs**\n${pages[page]}\n${message.guild.name} Queue`)
+                                .setColor(embedNeutral)
+                                .setThumbnail(player.queue.current.thumbnail)
+                                .setFooter({text: `Requested by @${message.author.tag}\nPage ${page + 1}/${pages.length}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
 
                             await msg.edit({
                                 embeds: [embed4],
                                 components: [row1]
                             }).catch(() => {});
+
                         } else if(button.customId === "queue_cmd_but_3") {
                             await button.deferUpdate().catch(() => {});
                             collector.stop();

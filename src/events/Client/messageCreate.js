@@ -1,13 +1,8 @@
-// consts \\
 
 const { embedNeutral } = require("../../config.js");
 const { embedError } = require("../../config.js");
-const { embedSuccess } = require("../../config.js");
 const { MessageEmbed, MessageActionRow, MessageButton, Permissions } = require("discord.js");
-
 const pre = require("../../schema/prefix.js");
-
-// events \\
 
 module.exports = async (client, message) => {
    
@@ -29,48 +24,17 @@ module.exports = async (client, message) => {
                     .setLabel("Invite")
                     .setStyle("LINK")
                     .setURL(`https://discord.com/api/oauth2/authorize?client_id=${client.user.id}&permissions=36768832&scope=applications.commands%20bot`),
-            );
+        );
 
         const embed = new MessageEmbed()
-            .setTitle('**About Command**')
+            .setDescription(`**Valerian Bot** is a multi-purpose music discord bot made by **[EnderDatsIt](https://github.com/Ender-thePlayer)**, based on **[LavaMusic](https://github.com/brblacky/lavamusic)**. My prefix in this server is \`\`${prefix}\`\`. Type \`\`${prefix}help\`\` to see the list of valid commands!\n\n**[LavaMusic](https://github.com/brblacky/lavamusic)** is a Discord music bot with many great features and supports multiple playback sources. It was created by **[Blacky#6618](https://github.com/brblacky)** and **[Venom#9718](https://github.com/Venom9718/)**.`)
             .setThumbnail(client.user.displayAvatarURL({dynamic: true, size: 512 }))
             .setColor(embedNeutral)
-            .setTimestamp()
-            .setFooter(`@${message.author.tag}`, message.author.displayAvatarURL({dynamic : true}))
-            .addFields(
+            .setImage('https://cdn.discordapp.com/attachments/849685363621625886/989797484354224178/Untitled6.png')
+            .setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
 
-                {
-                    name: "Creator",
-                    value: `[EnderDatsIt](https://github.com/Ender-thePlayer)`,
-                    inline: true
-                },
+        return message.reply({ embeds: [embed], components: [row] });
 
-                {
-                    name: "Host",
-                    value: `[Railway](https://railway.app/)`,
-                    inline: true
-                },
-
-                {
-                    name: "Support Server",
-                    value: `[Discord](https://discord.gg/nmfrhCWzkA)`,
-                    inline: true
-                },
-
-                {
-                    name: "\u200b",
-                    value: `**[Valerian Bot](n)** is a multi purpose discord bot made just for you, based on [LavaMusic](https://github.com/brblacky/lavamusic)! My prefix is \`\`${prefix}\`\`. Type \`\`${prefix}help\`\` or \`\`${prefix}aliases\`\` to see the list of valid commands!`,
-                    inline: false
-                },
-
-                {
-                    name: "\u200b",
-                    value: `[LavaMusic](https://github.com/brblacky/lavamusic) is a Discord music bot with many great features and supports multiple playback sources. It was created by **[Blacky#6618](https://github.com/brblacky)** and **[Venom#9718](https://github.com/Venom9718/)**.`,
-                    inline: false
-                },
-            )
-    return message.reply( { embeds: [embed], components: [row] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
-        setTimeout(() => msg.delete(), 120000)})
     }
 
     const escapeRegex = (str) => str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -85,21 +49,13 @@ module.exports = async (client, message) => {
     const command = client.commands.get(commandName) ||
         client.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName));
 
-    if (!command) {
-    let embed = new MessageEmbed()
-        .setTitle('**Error Occurred**')
-        .setDescription(`\`\`${prefix}${commandName}\`\` is not a valid command! Type \`\`${prefix}help\`\` or \`\`${prefix}aliases\`\` to see the list of valid commands!`)
-        .setColor(embedError)
-
-    return message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
-        setTimeout(() => msg.delete(), 120000)})};
+    if (!command) return;
 
     if(!message.guild.me.permissions.has(Permissions.FLAGS.SEND_MESSAGES)) return await message.author.dmChannel.send({ content: `I don't have **\`SEND_MESSAGES\`** permission in <#${message.channelId}> to execute **\`${command.name}\`** command.` }).catch(() => {});
     if(!message.guild.me.permissions.has(Permissions.FLAGS.VIEW_CHANNEL)) return;
     if(!message.guild.me.permissions.has(Permissions.FLAGS.EMBED_LINKS)) return await message.channel.send({ content: `I don't have **\`EMBED_LINKS\`** permission to execute **\`${command.name}\`** command.` }).catch(() => {});
     
     const embed = new MessageEmbed()
-        .setTitle('**Error Occurred**')
         .setColor(embedError);
 
     // args: true,
@@ -112,21 +68,19 @@ module.exports = async (client, message) => {
         }
         
         embed.setDescription(reply);
-        return message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
-            setTimeout(() => msg.delete(), 120000)});
+        return message.reply( { embeds: [embed] });
     }
 
     if (command.permission && !message.member.permissions.has(command.permission)) {
         embed.setDescription("You can't use this command.");
-		return message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
-			setTimeout(() => msg.delete(), 120000)});
+		return message.reply( { embeds: [embed] });
     }
     if (!channel.permissionsFor(message.guild.me)?.has(Permissions.FLAGS.EMBED_LINKS) && client.user.id !== userId) {
         embed.setDescription(`Error: I need \`EMBED_LINKS\` permission to work.`)
         return channel.send({ embeds: [embed] });
     }
     if (command.owner && message.author.id !== `${client.owner}`) {
-        embed.setDescription("Only <@506097799536967710> can use this command!");
+        embed.setDescription(`Only ${client.owner} can use this command!`);
         return message.channel.send({embeds: [embed]});
     }
 

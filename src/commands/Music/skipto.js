@@ -1,25 +1,28 @@
 const { MessageEmbed } = require("discord.js");
+const { embedNeutral } = require("../../config.js");
+const { embedError } = require("../../config.js");
 
 module.exports = {
   	name: "skipto",
-	  aliases: ["jump"],
+	aliases: ["jump"],
   	category: "Music",
-  	description: "Forward song",
+  	description: "Forward song.",
   	args: true,
-    usage: "<Number of song in queue>",
+    usage: "<number of song in queue>",
     permission: [],
     owner: false,
     player: true,
     inVoiceChannel: true,
     sameVoiceChannel: true,
- execute: async (message, args, client, prefix) => {
+    execute: async (message, args, client) => {
   
 		const player = client.manager.get(message.guild.id);
 
         if (!player.queue.current) {
             let thing = new MessageEmbed()
-                .setColor("RED")
-                .setDescription("There is no music playing.");
+                .setDescription("There is no music playing.")
+                .setColor(embedError);
+        
             return message.reply({embeds: [thing]});
         }
 
@@ -27,8 +30,9 @@ module.exports = {
 		
 		if (!position || position < 0 || position > player.queue.size) { 
 			let thing = new MessageEmbed()
-                .setColor("RED")
-				.setDescription(`Usage: ${message.client.prefix}skipto <Number of song in queue>`)
+                .setDescription(`Usage: ${message.client.prefix}skipto <Number of song in queue>`)
+                .setColor(embedError);
+            
             return message.reply({embeds: [thing]});
 		}
 
@@ -38,10 +42,10 @@ module.exports = {
 		const emojijump = client.emoji.jump;
 
 		let thing = new MessageEmbed()
-			.setDescription(`${emojijump} Forward **${position}** Songs`)
-			.setColor(client.embedColor)
-			.setTimestamp()
-			
+            .setDescription(`${emojijump} Forward **${position}** Songs`)
+            .setColor(embedNeutral)
+            .setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
+
 		return message.reply({embeds: [thing]});
 	
     }

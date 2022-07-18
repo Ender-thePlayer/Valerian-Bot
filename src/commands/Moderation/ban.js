@@ -1,21 +1,15 @@
-// consts \\
-
-const { embedNeutral } = require("../../config.js");
 const { embedError } = require("../../config.js");
-const { embedSuccess } = require("../../config.js");const { prefix } = require("../../config.js");
+const { embedSuccess } = require("../../config.js");
 const { MessageEmbed } = require("discord.js");
-
-// command \\
-
 
 module.exports = {
     name: "ban",
     category: "Moderation",
     aliases: [],
-    description: "Ban Command",
+    description: "Ban a user from the server.",
     args: false,
-    usage: ``,
-    permission: [],
+    usage: `<user> [reason]`,
+    permission: ['BAN_MEMBERS'],
     owner: false,
     execute: async (message, args, client) => {
 
@@ -24,56 +18,37 @@ module.exports = {
         let reason = args.slice(1).join(" "); 
         if (!reason) reason = "None";
 
-        if (!message.member.permissions.has("BAN_MEMBERS")) {
-            let embed = new MessageEmbed()
-                .setTitle('**Error Occurred**')
-                .setDescription('You don`t have permission to use this command!')
-                .setColor(embedError)
-
-            return message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
-                setTimeout(() => msg.delete(), 120000)});
-        };
-
         if (!args.length) {
             let embed = new MessageEmbed()
-                .setTitle('**Error Occurred**')
                 .setDescription('Please mention somebody to ban!')
                 .setColor(embedError)
 
-            return message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
-                setTimeout(() => msg.delete(), 120000)});
+            return message.reply( { embeds: [embed] })
         }
 
         if (!mentionMember) {
             let embed = new MessageEmbed()
-                .setTitle('**Error Occurred**')
                 .setDescription('That isn`t a user!')
                 .setColor(embedError)
 
-            return message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
-                setTimeout(() => msg.delete(), 120000)});
+            return message.reply( { embeds: [embed] })
         };
 
         if(!mentionMember.bannable) {
             let embed = new MessageEmbed()
-                .setTitle('**Error Occurred**')
                 .setDescription(`This user is a moderator!`)
                 .setColor(embedError)
 
-            return message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
-                    setTimeout(() => msg.delete(), 120000)});
+            return message.reply( { embeds: [embed] })
         };
 
         mentionMember.ban({ days: 1, reason: reason })
 
         const embed = new MessageEmbed()
-            .setTitle('**Ban Command**')
             .setDescription(`${target} was banned with the reason: **${reason}**!`)
             .setColor(embedSuccess)
-            .setTimestamp()
-            .setFooter(`@${message.author.tag}`, message.author.displayAvatarURL({dynamic : true}))
+            .setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
 
-        message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
-            setTimeout(() => msg.delete(), 120000)})
+        message.reply( { embeds: [embed] })
     }
 }

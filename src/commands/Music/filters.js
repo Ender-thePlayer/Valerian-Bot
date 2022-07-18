@@ -1,34 +1,35 @@
 const { MessageEmbed } = require("discord.js");
+const { embedSuccess } = require("../../config.js");
+const { embedError } = require("../../config.js");
 
 module.exports = {
 	name: "filter",
     category: "Music",
     aliases: [ "eq", "equalizer" ],
-    description: "Set EqualizerBand",
+    description: "EQ for music.",
     args: true,
-    usage: "<Party || Bass || Radio || Pop || Trablebass || Soft || Custom || Off>",
+    usage: "<Party / Bass / Radio / Pop / Trablebass / Soft / Custom / Off>",
     permission: [],
     owner: false,
     player: true,
     inVoiceChannel: true,
     sameVoiceChannel: true,
-	 execute: async (message, args, client, prefix) => {
+	 execute: async (message, args) => {
         
         const player = message.client.manager.get(message.guild.id);
 
         if (!player.queue.current) {
-            let thing = new MessageEmbed()
-                .setColor("RED")
-                .setDescription("There is no music playing.");
-            return message.reply({embeds: [thing]});
+			let embed = new MessageEmbed()
+                .setDescription(`There is no music playing!`)
+                .setColor(embedError)
+
+		    return message.reply( { embeds: [embed] })
         }
 
-        const emojiequalizer = message.client.emoji.filter;
-
         let thing = new MessageEmbed()
-            .setColor(client.embedColor)
-            .setTimestamp()
-            
+            .setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
+            .setColor(embedSuccess)
+
         if (args[0] == 'party') {
             var bands = [
                 { band: 0, gain: -1.16 },
@@ -41,8 +42,10 @@ module.exports = {
                 { band: 7, gain: -0.21 },
                 { band: 8, gain: -0.21 } 
             ];
-            thing.setDescription(`${emojiequalizer} Party mode is ON`);
+
+            thing.setDescription(`Party mode is ON`);
             player.setEQ(...bands);
+
         } else if (args[0] == 'bass') {
             var bands = [
                 { band: 0, gain: 0.6 },
@@ -61,8 +64,10 @@ module.exports = {
                 { band: 13, gain: 0 },
                 { band: 14, gain: 0 }    
             ];
-            thing.setDescription(`${emojiequalizer} Bass mode is ON`);
+
+            thing.setDescription(`Bass mode is ON`);
             player.setEQ(...bands);
+
         } else if (args[0] == 'radio') {
             var bands = [
                 { band: 0, gain: 0.65 },
@@ -81,8 +86,10 @@ module.exports = {
                 { band: 13, gain: 0 },
                 { band: 14, gain: 0 }  
             ];
-            thing.setDescription(`${emojiequalizer} Radio mode is ON`);
+
+            thing.setDescription(`Radio mode is ON`);
             player.setEQ(...bands);
+
         } else if (args[0] == 'pop') {
             var bands = [
                 { band: 0, gain: -0.25 },
@@ -101,8 +108,10 @@ module.exports = {
                 { band: 13, gain: 0 },
                 { band: 14, gain: 0 }
             ];
-            thing.setDescription(`${emojiequalizer} Pop mode is ON`);
+
+            thing.setDescription(`Pop mode is ON`);
             player.setEQ(...bands);
+
         } else if (args[0] == 'trablebass') {
             var bands = [
                 { band: 0, gain: 0.6 },
@@ -121,14 +130,18 @@ module.exports = {
                 { band: 13, gain: 0 },
                 { band: 14, gain: 0 }
             ];
-            thing.setDescription(`${emojiequalizer} Trablebass mode is ON`);
+
+            thing.setDescription(`Trablebass mode is ON`);
             player.setEQ(...bands);
+
         } else if (args[0] === "Bassboost" || args[0] == 'bassboost') {
             var bands = new Array(7).fill(null).map((_, i) => (
                 { band: i, gain: 0.25 }
             ));
-            thing.setDescription(`${emojiequalizer} Bassboost mode is ON`);
+
+            thing.setDescription(`Bassboost mode is ON`);
             player.setEQ(...bands);
+
         } else if (args[0] == 'soft') {
             var bands =  [
                 { band: 0, gain: 0 },
@@ -147,8 +160,10 @@ module.exports = {
                 { band: 13, gain: -0.25 },   
                 { band: 14, gain: -0.25 } 
             ];
-            thing.setDescription(`${emojiequalizer} Soft mode is ON`);
+
+            thing.setDescription(`Soft mode is ON`);
             player.setEQ(...bands);
+
         } else if (args[0] == 'custom') {
             var bands = [
                 { band: 0, gain: args[1] },
@@ -166,12 +181,15 @@ module.exports = {
                 { band: 12, gain: args[13] },   
                 { band: 13, gain: args[14] }    
             ];
-            thing.setDescription(`${emojiequalizer} Custom Equalizer mode is ON`);
+
+            thing.setDescription(`Custom Equalizer mode is ON`);
             player.setEQ(...bands);
+
         } else if (args[0] === "Off" || args[0] == 'off') {
-            thing.setDescription(`${emojiequalizer} Equalizer mode is OFF`);
+            thing.setDescription(`Equalizer mode is OFF`);
             player.clearEQ();
         }
+        
         return message.reply({embeds: [thing]});
     }
 };

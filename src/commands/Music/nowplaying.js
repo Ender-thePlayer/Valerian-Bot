@@ -1,12 +1,14 @@
 const { MessageEmbed } = require("discord.js");
 const { convertTime } = require('../../utils/convert.js');
 const { progressbar } = require('../../utils/progressbar.js')
+const { embedError } = require("../../config.js");
+const { embedNeutral } = require("../../config.js");
 
 module.exports = {
     name: "nowplaying",
     aliases: ["np"],
     category: "Music",
-    description: "Show now playing song",
+    description: "Show now playing song.",
     args: false,
     usage: "",
     permission: [],
@@ -14,27 +16,29 @@ module.exports = {
     player: true,
     inVoiceChannel: false,
     sameVoiceChannel: false,
-execute: async (message, args, client, prefix) => {
+    execute: async (message, client) => {
   
         const player = message.client.manager.get(message.guild.id);
 
         if (!player.queue.current) {
             let thing = new MessageEmbed()
-                .setColor("RED")
-                .setDescription("There is no music playing.");
+                .setDescription("There is no music playing.")
+                .setColor(embedError);
+
             return message.channel.send(thing);
         }
+
         const song = player.queue.current
-        const emojimusic = client.emoji.music;
         var total = song.duration;
         var current = player.position;
         
         let embed = new MessageEmbed()
-            .setDescription(`${emojimusic} **Now Playing**\n[${song.title}](${song.uri}) - \`[${convertTime(song.duration)}]\`- [${song.requester}] \n\n\`${progressbar(player)}\``)
+            .setDescription(`**Now Playing**\n[${song.title}](${song.uri}) - \`[${convertTime(song.duration)}]\`\n\n\`${progressbar(player)}\n${convertTime(current)} / ${convertTime(total)}\``)
             .setThumbnail(song.displayThumbnail("3"))
-            .setColor(client.embedColor)
-            .addField("\u200b", `\`${convertTime(current)} / ${convertTime(total)}\``)
-            return message.channel.send({embeds: [embed]})
+            .setColor(embedNeutral)
+            .setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
+
+        return message.channel.send({embeds: [embed]})
 
     }
 }

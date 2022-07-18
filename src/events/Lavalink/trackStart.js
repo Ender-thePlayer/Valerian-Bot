@@ -1,22 +1,14 @@
-// consts \\
 
 const { embedNeutral } = require("../../config.js");
-const { embedError } = require("../../config.js");
-const { embedSuccess } = require("../../config.js");
-const { prefix } = require("../../config.js");
 const { MessageEmbed, MessageActionRow, MessageButton} = require("discord.js");
 const { convertTime } = require('../../utils/convert.js');
-
-// events \\
     
 module.exports = async (client, player, track, payload) => {
 	
 		let embed = new MessageEmbed()
-			.setTitle('**Play Command**')
-			.setDescription(`Started Playing\n[${track.title}](${track.uri}) \n\`[${convertTime(track.duration)}]\``)
-			.setThumbnail(track.displayThumbnail("3"))
-			.setColor(embedNeutral)
-			.setTimestamp()
+		.setDescription(`Started Playing\n[${track.title}](${track.uri}) \n\`[${convertTime(track.duration)}]\``)
+		.setThumbnail(track.displayThumbnail("3"))
+		.setColor(embedNeutral)
 
 		const But1 = new MessageButton().setCustomId("vdown").setEmoji("🔉").setStyle("PRIMARY");	
 		const But2 = new MessageButton().setCustomId("stop").setEmoji("⏹️").setStyle("SECONDARY");

@@ -1,9 +1,11 @@
 const { MessageEmbed } = require("discord.js");
+const { embedError } = require("../../config.js");
+const { embedNeutral } = require("../../config.js");
 
 module.exports = {
     name: "pause",
     category: "Music",
-    description: "Pause the currently playing music",
+    description: "Pause the currently playing music.",
     args: false,
     usage: "",
     permission: [],
@@ -11,25 +13,26 @@ module.exports = {
     player: true,
     inVoiceChannel: true,
     sameVoiceChannel: true,
- execute: async (message, args, client, prefix) => {
+    execute: async (message, client) => {
     
 		const player = message.client.manager.get(message.guild.id);
 
         if (!player.queue.current) {
             let thing = new MessageEmbed()
-                .setColor("RED")
-                .setDescription("There is no music playing.");
-            return message.reply({embeds: [thing]});
+                .setDescription("There is no music playing.")
+                .setColor(embedError);
+                
+        return message.reply({embeds: [thing]});
         }
 
         const emojipause = client.emoji.pause;
 
         if (player.paused) {
             let thing = new MessageEmbed()
-                .setColor("RED")
                 .setDescription(`${emojipause} The player is already paused.`)
-                .setTimestamp()
-                return message.reply({embeds: [thing]});
+                .setColor(embedError)
+
+            return message.reply({embeds: [thing]});
         }
 
         player.pause(true);
@@ -37,10 +40,11 @@ module.exports = {
         const song = player.queue.current;
 
         let thing = new MessageEmbed()
-            .setColor(client.embedColor)
-            .setTimestamp()
             .setDescription(`${emojipause} **Paused**\n[${song.title}](${song.uri})`)
-          return message.reply({embeds: [thing]});
+            .setColor(embedNeutral)
+            .setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
+
+        return message.reply({embeds: [thing]});
 	
     }
 };

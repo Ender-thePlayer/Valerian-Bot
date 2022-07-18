@@ -1,12 +1,14 @@
 const { MessageEmbed } = require("discord.js");
+const { embedNeutral } = require("../../config.js");
+const { embedError } = require("../../config.js");
 
 module.exports = {
-	  name: "volume",
-	  aliases: ["v", "vol"],
-	  category: "Music",
-  	description: "Change volume of currently playing music",
-	  args: false,
-    usage: "",
+	name: "volume",
+	aliases: ["v", "vol"],
+	category: "Music",
+  	description: "Change volume of currently playing music.",
+	args: false,
+    usage: "[number of volume between 0 - 100]",
     permission: [],
     owner: false,
   	player: true,
@@ -18,8 +20,9 @@ module.exports = {
 
         if (!player.queue.current) {
             let thing = new MessageEmbed()
-                .setColor("RED")
-                .setDescription("There is no music playing.");
+				.setDescription("There is no music playing.")
+				.setColor(embedError);
+
             return message.reply({embeds: [thing]});
 		}
 		
@@ -27,9 +30,10 @@ module.exports = {
 
 		if (!args.length) {
 			let thing = new MessageEmbed()
-			.setColor(client.embedColor)
-			.setTimestamp()
-			.setDescription(`${volumeEmoji} The current volume is: **${player.volume}%**`)
+				.setDescription(`${volumeEmoji} The current volume is: **${player.volume}%**`)
+				.setColor(embedNeutral)
+				.setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
+		
 			return message.reply({embeds: [thing]});
 		}
 
@@ -37,9 +41,10 @@ module.exports = {
 		
 		if (!volume || volume < 0 || volume > 100) { 
 			let thing = new MessageEmbed()
-                .setColor("RED")
-				.setDescription(`Usage: ${prefix}volume <Number of volume between 0 - 100>`)
-            return message.reply({embeds: [thing]});
+				.setDescription(`Usage: ${prefix}volume [number of volume between 0 - 100]`)
+				.setColor(embedError);
+
+			return message.reply({embeds: [thing]});
 		}
 
 		player.setVolume(volume);
@@ -47,22 +52,27 @@ module.exports = {
 		if (volume > player.volume) {
 			var emojivolume = client.emoji.volumehigh;
 			let thing = new MessageEmbed()
-				.setColor(client.embedColor)
-				.setTimestamp()
 				.setDescription(`${emojivolume} Volume set to: **${volume}%**`)
-		  return message.reply({embeds: [thing]});
+				.setColor(embedNeutral)
+				.setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
+
+			return message.reply({embeds: [thing]});
+		
 		} else if (volume < player.volume) {
 			var emojivolume = message.client.emoji.volumelow;
 			let thing = new MessageEmbed()
-				.setColor(client.embedColor)
-				.setTimestamp()
 				.setDescription(`${emojivolume} Volume set to: **${volume}%**`)
-		  return message.reply({embeds: [thing]});
+				.setColor(embedNeutral)
+				.setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
+		
+			return message.reply({embeds: [thing]});
+		
 		} else {
 			let thing = new MessageEmbed()
-				.setColor(client.embedColor)
-				.setTimestamp()
 				.setDescription(`${volumeEmoji} Volume set to: **${volume}%**`)
+				.setColor(embedNeutral)
+				.setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
+
 			return message.reply({embeds: [thing]});
 		}
 		

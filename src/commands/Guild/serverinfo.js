@@ -1,97 +1,48 @@
-// consts \\
-
 const { embedNeutral } = require("../../config.js");
-const { embedError } = require("../../config.js");
-const { embedSuccess } = require("../../config.js");const { prefix } = require("../../config.js");
 const { MessageEmbed } = require("discord.js");
 const moment = require('moment');
 
-// command \\
-
 module.exports = {
     name: "serverinfo",
-    category: "Guild",
+    category: "User",
     aliases: [ 'si' ],
-    description: "ServerInfo Command",
+    description: "Get the server info.",
     args: false,
     usage: ``,
     permission: [],
     owner: false,
     execute: async (message, args, client) => {
 
+        let day = moment(message.guild.createdTimestamp).format('dddd, MMMM Do YYYY')
+        let date = moment(message.guild.createdTimestamp).format('LT')
+        let time = moment(message.guild.createdTimestamp).fromNow()
+        let members = message.guild.memberCount
+
+        let total = message.guild.channels.cache.size
+        let text = message.guild.channels.cache.filter(c => c.type === 'GUILD_TEXT').size
+        let voice = message.guild.channels.cache.filter(c => c.type === 'GUILD_VOICE').size
+        let categories = message.guild.channels.cache.filter(c => c.type === 'GUILD_CATEGORY').size
+
+        let roles = message.guild.roles.cache.size -1
+        let emotes = message.guild.emojis.cache.size
+        let region = message.guild.preferredLocale
+        let boosts = message.guild.premiumSubscriptionCount >= 1 ? `${message.guild.premiumSubscriptionCount} boosts` : `There are no boosts`
+
         const embed = new MessageEmbed()
-            .setTitle(`**ServerInfo Command**`)
             .setColor(embedNeutral)
             .setThumbnail(message.guild.iconURL({dynamic : true}))
-            .setFooter(`@${message.author.tag}`, message.author.displayAvatarURL({dynamic : true}))
-            .addFields(
-        
-                {
-                    name: "Name: ",
-                    value: `${message.guild.name}`,
-                    inline: false
-                },
+            .setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
+            
+            .setDescription(`**Name:** ${message.guild.name}
+            **ID:** ${message.guild.id}
+            **Owner:**<@${message.guild.ownerId}>
+            **Members:** ${members}\n
+            **Created:** ${day}, ${date} (${time})
+            **Roles:** ${roles} Roles | **Emotes:** ${emotes} | **Region:** ${region}\n
+            **Channels**
+            **Total:** ${total} | **Text:** ${text} | **Voice:** ${voice} | **Category:** ${categories}\n
+            **Boosts:** ${boosts}`)
 
-                {
-                    name: "Server ID: ",
-                    value: `${message.guild.id}`,
-                    inline: false
-                },
-
-                {
-                    name: "Server was created on: ",
-                    value: `${moment(message.guild.createdTimestamp).format('dddd, MMMM Do YYYY')}, ${moment(message.guild.createdTimestamp).format('LT')} (${moment(message.guild.createdTimestamp).fromNow()})`,
-                    inline: false
-                },
-
-                {
-                    name: "Channels: ",
-                    value: `${message.guild.channels.cache.size} Total, ${message.guild.channels.cache.filter(c => c.type === 'GUILD_TEXT').size} Text, ${message.guild.channels.cache.filter(c => c.type === 'GUILD_VOICE').size} Voice, ${message.guild.channels.cache.filter(c => c.type === 'GUILD_STAGE_VOICE').size} Voice Stages, ${message.guild.channels.cache.filter(c => c.type === 'GUILD_CATEGORY').size} Categories,`,
-                    inline: false
-                },
-
-                {
-                    name: "Owner: ",
-                    value: `<@${message.guild.ownerId}>`,
-                    inline: false
-                },
-
-                {
-                    name: "Member: ",
-                    value: `${message.guild.memberCount} Members`,
-                    inline: true
-                },
-
-                {
-                    name: "Roles Count: ",
-                    value: `${message.guild.roles.cache.size -1} Roles`,
-                    inline: true,
-                },
-
-                {
-                    name: `Region: `,
-                    value: `${message.guild.preferredLocale}`,
-                    inline: true
-                },
-
-                {
-                    name: `Verification: `,
-                    value: message.guild.verified ? 'Verified' : `Not Verified`,
-                    inline: true
-                },
-                {
-                    name: 'Boosts: ',
-                    value: message.guild.premiumSubscriptionCount >= 1 ? `${message.guild.premiumSubscriptionCount} boosts` : `There are no boosts`,
-                    inline: true
-                },
-                {
-                    name: "Emojis: ",
-                    value: message.guild.emojis.cache.size >= 1 ? `${message.guild.emojis.cache.size} emojis` : 'There are no emojis' ,
-                    inline: true
-                }
-            )
-        message.reply( { embeds: [embed] }).then(setTimeout(() => message.delete(), 120000)).then(msg =>{
-            setTimeout(() => msg.delete(), 120000)});
-    
+        message.reply( { embeds: [embed] })
 	},
 };
