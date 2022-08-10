@@ -21,11 +21,11 @@ module.exports = {
         const player = message.client.manager.get(message.guild.id);
 
         if (!player.queue.current) {
-            let thing = new MessageEmbed()
+            let embed = new MessageEmbed()
                 .setDescription("There is no music playing.")
                 .setColor(embedError);
 
-            return message.channel.send(thing);
+            return message.reply({embeds: [embed]});
         }
 
         const song = player.queue.current
@@ -38,7 +38,7 @@ module.exports = {
             .setColor(embedNeutral)
             .setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
 
-        return message.channel.send({embeds: [embed]})
+        return message.reply({embeds: [embed]})
 
     }
 }

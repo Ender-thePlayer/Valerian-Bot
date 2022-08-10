@@ -1,4 +1,3 @@
-
 const { embedNeutral } = require("../../config.js");
 const { embedError } = require("../../config.js");
 const { embedSuccess } = require("../../config.js");
@@ -15,6 +14,6 @@ module.exports = async (client, player, track, payload) => {
 
     channel.send({embeds: [embed]})
 
-    client.logger.log(`Error when loading song! Track is stuck in [${player.guild}]`, "error");
+    client.logger.log(`Error when loading song! Track stuck in [${player.guild}]!`, "error");
     if (!player.voiceChannel) player.destroy();
 }

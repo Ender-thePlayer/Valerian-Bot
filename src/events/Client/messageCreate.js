@@ -1,4 +1,3 @@
-
 const { embedNeutral } = require("../../config.js");
 const { embedError } = require("../../config.js");
 const { MessageEmbed, MessageActionRow, MessageButton, Permissions } = require("discord.js");
@@ -24,13 +23,19 @@ module.exports = async (client, message) => {
                     .setLabel("Invite")
                     .setStyle("LINK")
                     .setURL(`https://discord.com/api/oauth2/authorize?client_id=${client.user.id}&permissions=36768832&scope=applications.commands%20bot`),
-        );
+        
+                new MessageButton()
+                    .setLabel("Join")
+                    .setStyle("LINK")
+                    .setURL(`https://discord.gg/svzyfVBmH2`),
+            
+            );
 
         const embed = new MessageEmbed()
             .setDescription(`**Valerian Bot** is a multi-purpose music discord bot made by **[EnderDatsIt](https://github.com/Ender-thePlayer)**, based on **[LavaMusic](https://github.com/brblacky/lavamusic)**. My prefix in this server is \`\`${prefix}\`\`. Type \`\`${prefix}help\`\` to see the list of valid commands!\n\n**[LavaMusic](https://github.com/brblacky/lavamusic)** is a Discord music bot with many great features and supports multiple playback sources. It was created by **[Blacky#6618](https://github.com/brblacky)** and **[Venom#9718](https://github.com/Venom9718/)**.`)
             .setThumbnail(client.user.displayAvatarURL({dynamic: true, size: 512 }))
             .setColor(embedNeutral)
-            .setImage('https://cdn.discordapp.com/attachments/849685363621625886/989797484354224178/Untitled6.png')
+            .setImage('https://i.imgur.com/EDUWHjA.png')
             .setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
 
         return message.reply({ embeds: [embed], components: [row] });

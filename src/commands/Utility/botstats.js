@@ -6,7 +6,7 @@ const si = require('systeminformation');
 module.exports = {
     name: "botstats",
     category: "Utility",
-    aliases: [ 'botinfo', 'i' ],
+    aliases: [ 'botinfo', 'i', 'info' ],
     description: "Shows bot information.",
     args: false,
     usage: '',

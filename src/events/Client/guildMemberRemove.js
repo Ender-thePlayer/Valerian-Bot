@@ -1,4 +1,5 @@
 const { embedNeutral } = require("../../config.js");
+const { leave } = require("../../config.js");
 const { MessageEmbed} = require("discord.js");
 
 module.exports = async (guildMemberRemove, member) => {
@@ -12,5 +13,5 @@ module.exports = async (guildMemberRemove, member) => {
 		.setColor(embedNeutral)
 		.setTimestamp()
 
-	member.guild.channels.cache.get("935930540337549322").send({ embeds: [embed] })
+	member.guild.channels.cache.get(leave).send({ embeds: [embed] })
 }

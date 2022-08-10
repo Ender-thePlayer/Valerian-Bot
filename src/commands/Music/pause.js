@@ -18,31 +18,31 @@ module.exports = {
 		const player = message.client.manager.get(message.guild.id);
 
         if (!player.queue.current) {
-            let thing = new MessageEmbed()
+            let embed = new MessageEmbed()
                 .setDescription("There is no music playing.")
                 .setColor(embedError);
                 
-        return message.reply({embeds: [thing]});
+        return message.reply({embeds: [embed]});
         }
 
         if (player.paused) {
-            let thing = new MessageEmbed()
+            let embed = new MessageEmbed()
                 .setDescription(`The player is already paused.`)
                 .setColor(embedError)
 
-            return message.reply({embeds: [thing]});
+            return message.reply({embeds: [embed]});
         }
 
         player.pause(true);
 
         const song = player.queue.current;
 
-        let thing = new MessageEmbed()
+        let embed = new MessageEmbed()
             .setDescription(`**Paused**\n[${song.title}](${song.uri})`)
             .setColor(embedNeutral)
             .setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
 
-        return message.reply({embeds: [thing]});
+        return message.reply({embeds: [embed]});
 	
     }
 };

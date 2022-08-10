@@ -1,4 +1,3 @@
-
 const { embedNeutral } = require("../../config.js");
 const { MessageEmbed} = require("discord.js");
 
@@ -8,7 +7,7 @@ module.exports = async ( player, newChannel) => {
         	await player.destroy();
 
 			let embed = new MessageEmbed()
-			.setDescription("Music stopped as I have been disconnected from the voice channel.")
+			.setDescription("Stopped the music because I was disconnected from the voice channel.")
 			.setColor(embedNeutral)
 	
         	return message.channel.send({ embeds: [embed] })

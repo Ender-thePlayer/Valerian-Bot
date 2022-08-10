@@ -21,11 +21,11 @@ module.exports = {
 		const player = message.client.manager.get(message.guild.id);
 
         if (!player.queue.current) {
-            let thing = new MessageEmbed()
+            let embed = new MessageEmbed()
                 .setDescription("There is no music playing.")
                 .setColor(embedError);
 
-        return message.reply({embeds: [thing]});
+            return message.reply({embeds: [embed]});
         }
 
         const time = ms(args[0])
@@ -37,28 +37,28 @@ module.exports = {
         if (time <= duration) {
             if (time > position) {
                 player.seek(time);
-                let thing = new MessageEmbed()
+                let embed = new MessageEmbed()
                     .setDescription(`**Forward**\n[${song.title}](${song.uri})\n\`${convertTime(time)} / ${convertTime(duration)}\``)
                     .setColor(embedNeutral)
                     .setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
                 
-                return message.reply({embeds: [thing]});
+                return message.reply({embeds: [embed]});
 
             } else {
                 player.seek(time);
-                let thing = new MessageEmbed()
+                let embed = new MessageEmbed()
                     .setDescription(`**Rewind**\n[${song.title}](${song.uri})\n\`${convertTime(time)} / ${convertTime(duration)}\``)
                     .setColor(embedNeutral)
                     .setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
                     
-          return message.reply({embeds: [thing]});
+          return message.reply({embeds: [embed]});
             }
         } else {
-            let thing = new MessageEmbed()
+            let embed = new MessageEmbed()
                 .setDescription(`Seek duration exceeds Song duration.\nSong duration: \`${convertTime(duration)}\``)
                 .setColor(embedError);    
 
-            return message.reply({embeds: [thing]});
+            return message.reply({embeds: [embed]});
         }
 	
     }

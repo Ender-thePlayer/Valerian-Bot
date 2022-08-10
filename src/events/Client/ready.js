@@ -1,14 +1,23 @@
-
 const { prefix } = require("../../config.js");
+const { message } = require("../../config.js");
+const { type } = require("../../config.js");
+const { status } = require("../../config.js");
 
 module.exports = async (client) => {
     client.manager.init(client.user.id);
     client.logger.log(`${client.user.username} online!`, "ready");
     client.logger.log(`Ready on ${client.guilds.cache.size} servers, for a total of ${client.users.cache.size} users`, "ready");
 
-    let statuses = [`${prefix}help`];
-    setInterval(function() {
-  		let status = statuses[Math.floor(Math.random()*statuses.length)];
-  		client.user.setActivity(status, {type: "PLAYING"});
-  	}, 10000)
+    let activity = `${status}` || 'online';
+    let types = `${type}` || 'PLAYING';
+    let name = `${message}` || `${prefix}help`;
+
+    client.user.setPresence({
+        status: activity,
+        activities: [{
+            name: name,
+            type: types
+        }]
+    });
+
 }

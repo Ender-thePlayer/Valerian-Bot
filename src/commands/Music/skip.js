@@ -19,22 +19,22 @@ module.exports = {
 		const player = message.client.manager.get(message.guild.id);
 
         if (!player.queue.current) {
-            let thing = new MessageEmbed()
+            let embed = new MessageEmbed()
                 .setDescription("There is no music playing.")
                 .setColor(embedError);
         
-        return message.reply({embeds: [thing]});
+            return message.reply({embeds: [embed]});
         }
 
         const song = player.queue.current;
 
         player.stop();
            
-		let thing = new MessageEmbed()
+		let embed = new MessageEmbed()
             .setDescription(`**Skipped**\n[${song.title}](${song.uri})`)
             .setColor(embedNeutral)
             .setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
 
-		return message.reply({embeds: [thing]})
+		return message.reply({embeds: [embed]})
     }
 };

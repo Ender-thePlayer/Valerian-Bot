@@ -20,29 +20,29 @@ module.exports = {
         const song = player.queue.current;
 
         if (!player.queue.current) {
-            let thing = new MessageEmbed()
+            let embed = new MessageEmbed()
             .setDescription("There is no music playing.")
             .setColor(embedError);
 
-        return message.reply({embeds: [thing]});
+        return message.reply({embeds: [embed]});
         }
 
         if (!player.paused) {
-            let thing = new MessageEmbed()
+            let embed = new MessageEmbed()
                 .setDescription(`The player is already **resumed**.`)
                 .setColor(embedError);
 
-            return message.reply({embeds: [thing]});
+            return message.reply({embeds: [embed]});
         }
 
         player.pause(false);
 
-        let thing = new MessageEmbed()
+        let embed = new MessageEmbed()
             .setDescription(`**Resumed**\n[${song.title}](${song.uri})`)
             .setColor(embedNeutral)
             .setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
 
-        return message.reply({embeds: [thing]});
+        return message.reply({embeds: [embed]});
 	
     }
 };

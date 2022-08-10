@@ -19,32 +19,32 @@ module.exports = {
 		const player = message.client.manager.get(message.guild.id);;
 
         if (!player.queue.current) {
-            let thing = new MessageEmbed()
+            let embed = new MessageEmbed()
                 .setDescription("There is no music playing.")
                 .setColor(embedError);
         
-            return message.reply({embeds: [thing]});
+            return message.reply({embeds: [embed]});
         }
 
         const position = Number(args[0]);
 		
 		if (!position || position < 0 || position > player.queue.size) { 
-			let thing = new MessageEmbed()
+			let embed = new MessageEmbed()
                 .setDescription(`Usage: ${message.client.prefix}skipto <Number of song in queue>`)
                 .setColor(embedError);
             
-            return message.reply({embeds: [thing]});
+            return message.reply({embeds: [embed]});
 		}
 
         player.queue.remove(0, position - 1);
         player.stop();
 		
-		let thing = new MessageEmbed()
+		let embed = new MessageEmbed()
             .setDescription(`Forward **${position}** Songs`)
             .setColor(embedNeutral)
             .setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
 
-		return message.reply({embeds: [thing]});
+		return message.reply({embeds: [embed]});
 	
     }
 };

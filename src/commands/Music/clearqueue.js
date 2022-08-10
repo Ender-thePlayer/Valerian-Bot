@@ -23,17 +23,17 @@ module.exports = {
 			.setDescription(`There is no music playing!`)
             .setColor(embedError)
 
-		    return message.reply( { embeds: [embed] })
+		    return message.reply( { embeds: [embed] });
         }
 
 		player.queue.clear();
 
-        let thing = new MessageEmbed()
+        let embed = new MessageEmbed()
             .setDescription(`Removed all songs from the queue`)
             .setColor(embedSuccess)
             .setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
         
-        await message.reply( { embeds: [thing] })
+        await message.reply( { embeds: [embed] });
         
         return;  
     }

@@ -14,12 +14,12 @@ module.exports = {
 
 		const embed = new MessageEmbed()
 			.setColor(embedNeutral)
-			.setImage('https://i.imgur.com/e7Zo2Hh.png')
+			.setImage('https://i.imgur.com/5LOcziE.png')
             .setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
 			.addFields(
-				{ name: 'Current Version:', value:'``1.2.0``', inline: true },
-				{ name: 'Version Name:', value:'``The Remastering Update``', inline: true },
-				{ name: 'Changelogs:', value: '```\n⏵ Changed Command Interface\n⏵ Added 18 Music Commands\n⏵ Updated Help Command (Now More Useful)\n⏵ Updated Avatar Command\n⏵ Removed About Command\n⏵ Removed Aliases Command\n⏵ Removed Tickets Command\n⏵ Removed Poll Command\n⏵ Removed All Fun Commands\n⏵ Removed Command Timeout\n⏵ Fixed Lots of Bugs\n```',inline: false }
+				{ name: 'Current Version:', value:'``1.3.0``', inline: true },
+				{ name: 'Version Name:', value:'``The Renaissance Update``', inline: true },
+				{ name: 'Changelogs:', value: '```\n⏵ Readed Meme command\n⏵ Removed Join Leave commands\n⏵ Changed Music commands\n⏵ Updated Handler stuff\n```',inline: false }
 			)
 
 		message.reply( { embeds: [embed] })

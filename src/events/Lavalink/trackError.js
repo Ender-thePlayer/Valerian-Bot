@@ -1,4 +1,3 @@
-
 const { embedError } = require("../../config.js");
 const { MessageEmbed} = require("discord.js");
     
@@ -13,7 +12,7 @@ module.exports = async (client, player, track, payload) => {
 
     channel.send({embeds: [embed]})
 
-    client.logger.log(`Error when loading song! Track is error in [${player.guild}]`, "error");
+    client.logger.log(`Error when loading song! Track error in [${player.guild}]!`, "error");
     if (!player.voiceChannel) player.destroy();
 
 }

@@ -18,11 +18,11 @@ module.exports = {
         const player = message.client.manager.get(message.guild.id);
 
         if (!player.queue.current) {
-            let thing = new MessageEmbed()
+            let embed = new MessageEmbed()
                 .setDescription("There is no music playing.")
                 .setColor(embedError);
 
-            return message.reply({embeds: [thing]});
+            return message.reply({embeds: [embed]});
         }
 
         const autoplay = player.get("autoplay")
@@ -30,15 +30,14 @@ module.exports = {
             player.set("autoplay", false);
         }
 
-        player.stop();
-        player.queue.clear();
+        player.destroy();
 
-        let thing = new MessageEmbed()
-            .setDescription(`Stopped the music`)
+        let embed = new MessageEmbed()
+            .setDescription(`Stopped the music and cleared the queue.`)
             .setColor(embedNeutral)
             .setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
 
-        message.reply({embeds: [thing]});
+        message.reply({embeds: [embed]});
 	
   	}
 };

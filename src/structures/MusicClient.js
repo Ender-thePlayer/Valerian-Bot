@@ -10,138 +10,148 @@ const mongoose = require('mongoose');
 require("./PlayerBase"); 
 
 class MusicBot extends Client {
-	 constructor() {
-        super({
-            shards: "auto",
-            allowedMentions: {
-                parse: ["roles", "users", "everyone"],
-                repliedUser: false
-            },
-            intents: [
-                Intents.FLAGS.GUILDS,
-                Intents.FLAGS.GUILD_MESSAGES, 
-                Intents.FLAGS.GUILD_MEMBERS, 
-                Intents.FLAGS.GUILD_VOICE_STATES
-            ]
+	constructor() {
+		super({
+				shards: "auto",
+				allowedMentions: {
+					parse: ["roles", "users", "everyone"],
+					repliedUser: false
+				},
+				intents: [
+					Intents.FLAGS.GUILDS,
+					Intents.FLAGS.GUILD_MESSAGES, 
+					Intents.FLAGS.GUILD_MEMBERS, 
+					Intents.FLAGS.GUILD_VOICE_STATES
+				]
         });
-		 this.commands = new Collection();
-     this.slashCommands = new Collection();
-     this.config = require("../config.js");
-     this.owner = this.config.ownerID;
-     this.prefix = this.config.prefix;
-     this.embedColor = this.config.embedColor;
-     this.aliases = new Collection();
-     this.commands = new Collection();
-     this.logger = require("../utils/logger.js");
-     this.emoji = require("../utils/emoji.json");
-     if(!this.token) this.token = this.config.token;
-   /**
-    *  Mongose for data base
-    */
-		 const dbOptions = {
-        useNewUrlParser: true,
-        autoIndex: false,
-        connectTimeoutMS: 10000,
-        family: 4,
-        useUnifiedTopology: true,
-      };
-        mongoose.connect(this.config.mongourl, dbOptions);
-        mongoose.Promise = global.Promise;
-        mongoose.connection.on('connected', () => {
-              this.logger.log('[DB] DATABASE CONNECTED', "ready");
-              });
-        mongoose.connection.on('err', (err) => {
-                  console.log(`Mongoose connection error: \n ${err.stack}`, "error");
-              });
-        mongoose.connection.on('disconnected', () => {
-                  console.log('Mongoose disconnected');
-              });
+
+		this.commands = new Collection();
+		this.slashCommands = new Collection();
+		this.config = require("../config.js");
+		this.owner = this.config.ownerID;
+		this.prefix = this.config.prefix;
+		this.embedColor = this.config.embedColor;
+		this.aliases = new Collection();
+		this.commands = new Collection();
+		this.logger = require("../utils/logger.js");
+		if(!this.token) this.token = this.config.token;
+
+		/**
+		 *  Mongose for data base
+		 */
+		const dbOptions = {
+			useNewUrlParser: true,
+			autoIndex: false,
+			connectTimeoutMS: 10000,
+			family: 4,
+			useUnifiedTopology: true,
+		};
+
+		mongoose.connect(this.config.mongourl, dbOptions);
+		mongoose.Promise = global.Promise;
+
+		mongoose.connection.on('connected', () => {
+			this.logger.log('[DB] DATABASE CONNECTED', "ready");
+		});
+
+		mongoose.connection.on('err', (err) => {
+			console.log(`[DB] Mongoose connection error: \n ${err.stack}`, "error");
+		});
+		mongoose.connection.on('disconnected', () => {
+			console.log('[DB] Mongoose disconnected');
+		});
         
-    /**
-     * Error Handler
-     */
-    this.on("disconnect", () => console.log("Bot is disconnecting..."))
-    this.on("reconnecting", () => console.log("Bot reconnecting..."))
-    this.on('warn', error => console.log(error));
-    this.on('error', error => console.log(error));
-    process.on('unhandledRejection', error => console.log(error));
-    process.on('uncaughtException', error => console.log(error));
-		    const client = this;
+		/**
+		 * Error Handler
+		 */
+		this.on("disconnect", () => console.log("Bot is disconnecting..."))
+		this.on("reconnecting", () => console.log("Bot reconnecting..."))
+		this.on('warn', error => console.log(error));
+		this.on('error', error => console.log(error));
+		process.on('unhandledRejection', error => console.log(error));
+		process.on('uncaughtException', error => console.log(error));
+				
+		const client = this;
 
-		   this.Lavasfy = new LavasfyClient(
-      {
-        clientID: this.config.SpotifyID,
-        clientSecret: this.config.SpotifySecret,
-        playlistPageLoadLimit: 4,
-        filterAudioOnlyResult: true,
-        autoResolve: true,
-        useSpotifyMetadata: true,
-      },
-      [
-        {
-          id: this.config.nodes.id,
-          host: this.config.nodes.host,
-          port: this.config.nodes.port,
-          password: this.config.nodes.password,
-          secure: this.config.nodes.secure,
-        },
-      ]
-    );
+		this.Lavasfy = new LavasfyClient(
+			{
+				clientID: this.config.SpotifyID,
+				clientSecret: this.config.SpotifySecret,
+				playlistPageLoadLimit: 4,
+				filterAudioOnlyResult: true,
+				autoResolve: true,
+				useSpotifyMetadata: true,
+			},
 
-    this.manager = new Manager({
-      plugins: [
-        new deezer(),
-        new apple(),
-        new facebook(),
-      ],
-      nodes: [
-        {
-          identifier: this.config.nodes.id,
-          host: this.config.nodes.host,
-          port: this.config.nodes.port,
-          password: this.config.nodes.password,
-          secure: this.config.nodes.secure,
-        },
-      ],
-      send(id, payload) {
-        const guild = client.guilds.cache.get(id);
-        if (guild) guild.shard.send(payload);
-      },
-    })
+			[
+				{
+					id: this.config.nodes.id,
+					host: this.config.nodes.host,
+					port: this.config.nodes.port,
+					password: this.config.nodes.password,
+					secure: this.config.nodes.secure,
+				},
+			]
+		);
+
+		this.manager = new Manager({
+			plugins: [
+				new deezer(),
+				new apple(),
+				new facebook(),
+			],
+			nodes: [
+				{
+					identifier: this.config.nodes.id,
+					host: this.config.nodes.host,
+					port: this.config.nodes.port,
+					password: this.config.nodes.password,
+					secure: this.config.nodes.secure,
+				},
+			],
+			send(id, payload) {
+				const guild = client.guilds.cache.get(id);
+				if (guild) guild.shard.send(payload);
+			},
+		})
 		  
-/**
- * Client Events
- */
-	readdirSync("./src/events/Client/").forEach(file => {
-    const event = require(`../events/Client/${file}`);
-    let eventName = file.split(".")[0];
-    this.logger.log(`Loading Events Client ${eventName}`, "event");
-    this.on(eventName, event.bind(null, this));
-});
-/**
- * Erela Manager Events
- */ 
-  readdirSync("./src/events/Lavalink/").forEach(file => {
-    const event = require(`../events/Lavalink/${file}`);
-    let eventName = file.split(".")[0];
-    client.logger.log(`Loading Events Lavalink ${eventName}`, "event");
-    client.manager.on(eventName, event.bind(null, client));
-});
-/**
- * Import all commands
- */
-  readdirSync("./src/commands/").forEach(dir => {
-    const commandFiles = readdirSync(`./src/commands/${dir}/`).filter(f => f.endsWith('.js'));
-    for (const file of commandFiles) {
-        const command = require(`../commands/${dir}/${file}`);
-        this.logger.log(`Loading ${command.category} commands ${command.name}`, "cmd");
-        this.commands.set(command.name, command);
-    }
-})
+		/**
+		 * Client Events
+		 */
+			readdirSync("./src/events/Client/").forEach(file => {
+				const event = require(`../events/Client/${file}`);
+				let eventName = file.split(".")[0];
+				this.logger.log(`Loading Events Client ${eventName}`, "event");
+				this.on(eventName, event.bind(null, this));
+			});
 
-	 }
-		 connect() {
-        return super.login(this.token);
+		/**
+		 * Erela Manager Events
+		 */ 
+		readdirSync("./src/events/Lavalink/").forEach(file => {
+			const event = require(`../events/Lavalink/${file}`);
+			let eventName = file.split(".")[0];
+			client.logger.log(`Loading Events Lavalink ${eventName}`, "event");
+			client.manager.on(eventName, event.bind(null, client));
+		});
+
+		/**
+		 * Import all commands
+		 */
+		readdirSync("./src/commands/").forEach(dir => {
+			const commandFiles = readdirSync(`./src/commands/${dir}/`).filter(f => f.endsWith('.js'));
+			for (const file of commandFiles) {
+				const command = require(`../commands/${dir}/${file}`);
+				this.logger.log(`Loading ${command.category} commands ${command.name}`, "cmd");
+				this.commands.set(command.name, command);
+			}
+		})
+
+	}
+	
+	connect() {
+    	return super.login(this.token);
     };
 };
+
 module.exports = MusicBot;

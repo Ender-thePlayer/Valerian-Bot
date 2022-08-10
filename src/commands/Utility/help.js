@@ -48,10 +48,11 @@ module.exports = {
 					.setColor(embedNeutral)
 					.setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
 					.setDescription(` Hi <@${message.author.id}>, I'm <@${client.user.id}>.\n
-					A bot with a lot of useful commands and that's updated frequently for a good user experience.\n
+					A multi-purpose bot with a lot of useful commands, that's on 24/7 and that's updated frequently for a good user experience.\n
+					We've changed the discord server to a new one [here](https://discord.gg/svzyfVBmH2).
 					To find more about a command, type \`\`${p}help [command]\`\`
 					\`\`\`\nPrefix: ${p}\nParameters: <> = required, [] = optional\`\`\`
-					**[Invite Bot](https://discord.com/api/oauth2/authorize?client_id=${client.user.id}&permissions=36768832&scope=applications.commands%20bot)** • **[Discord Server](https://discord.gg/nmfrhCWzkA)**
+					**[Invite Bot](https://discord.com/api/oauth2/authorize?client_id=${client.user.id}&permissions=36768832&scope=applications.commands%20bot)** • **[Discord Server](https://discord.gg/svzyfVBmH2)**
 					`),
 	
 				new MessageEmbed()
@@ -62,8 +63,8 @@ module.exports = {
 						{ name: 'Config Commands [2]', value: '``resetprefix`` ``setprefix``', inline: false },
 						{ name: 'Guild Commands [3]', value: '``avatar`` ``serverinfo`` ``userinfo``', inline: false },
 						{ name: 'Moderation Commands [5]', value: '``ban`` ``bansave`` ``clear`` ``kick`` ``slowmode``', inline: false },
-						{ name: 'Music Commands [18]', value: '``247`` ``clearqueue`` ``filters`` ``join`` ``leave`` ``loop`` ``nowplaying`` ``pause`` ``play`` ``queue`` ``remove`` ``resume`` ``seek`` ``shuffle`` ``skip`` ``skipto`` ``stop`` ``volume``', inline: false },
-						{ name: 'Utility Commands [5]', value: '``about`` ``botstats`` ``changelogs`` ``help`` ``ping``', inline: false },
+						{ name: 'Music Commands [15]', value: '``clearqueue`` ``filters`` ``loop`` ``nowplaying`` ``pause`` ``play`` ``queue`` ``remove`` ``resume`` ``seek`` ``shuffle`` ``skip`` ``skipto`` ``stop`` ``volume``', inline: false },
+						{ name: 'Utility Commands [5]', value: '``botstats`` ``changelogs`` ``help`` ``ping``', inline: false },
 
 					),
 	

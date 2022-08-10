@@ -8,7 +8,7 @@ module.exports = {
     aliases: [ "eq", "equalizer" ],
     description: "EQ for music.",
     args: true,
-    usage: "<Party / Bass / Radio / Pop / Trablebass / Soft / Custom / Off>",
+    usage: "<party / bass / radio / pop / trablebass / soft / off>",
     permission: [],
     owner: false,
     player: true,
@@ -26,7 +26,7 @@ module.exports = {
 		    return message.reply( { embeds: [embed] })
         }
 
-        let thing = new MessageEmbed()
+        let embed = new MessageEmbed()
             .setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
             .setColor(embedSuccess)
 
@@ -43,7 +43,7 @@ module.exports = {
                 { band: 8, gain: -0.21 } 
             ];
 
-            thing.setDescription(`Party mode is ON`);
+            embed.setDescription(`Party mode is ON.`);
             player.setEQ(...bands);
 
         } else if (args[0] == 'bass') {
@@ -65,7 +65,7 @@ module.exports = {
                 { band: 14, gain: 0 }    
             ];
 
-            thing.setDescription(`Bass mode is ON`);
+            embed.setDescription(`Bass mode is ON.`);
             player.setEQ(...bands);
 
         } else if (args[0] == 'radio') {
@@ -87,7 +87,7 @@ module.exports = {
                 { band: 14, gain: 0 }  
             ];
 
-            thing.setDescription(`Radio mode is ON`);
+            embed.setDescription(`Radio mode is ON.`);
             player.setEQ(...bands);
 
         } else if (args[0] == 'pop') {
@@ -109,7 +109,7 @@ module.exports = {
                 { band: 14, gain: 0 }
             ];
 
-            thing.setDescription(`Pop mode is ON`);
+            embed.setDescription(`Pop mode is ON.`);
             player.setEQ(...bands);
 
         } else if (args[0] == 'trablebass') {
@@ -131,7 +131,7 @@ module.exports = {
                 { band: 14, gain: 0 }
             ];
 
-            thing.setDescription(`Trablebass mode is ON`);
+            embed.setDescription(`Trablebass mode is ON.`);
             player.setEQ(...bands);
 
         } else if (args[0] === "Bassboost" || args[0] == 'bassboost') {
@@ -139,7 +139,7 @@ module.exports = {
                 { band: i, gain: 0.25 }
             ));
 
-            thing.setDescription(`Bassboost mode is ON`);
+            embed.setDescription(`Bassboost mode is ON.`);
             player.setEQ(...bands);
 
         } else if (args[0] == 'soft') {
@@ -161,35 +161,14 @@ module.exports = {
                 { band: 14, gain: -0.25 } 
             ];
 
-            thing.setDescription(`Soft mode is ON`);
-            player.setEQ(...bands);
-
-        } else if (args[0] == 'custom') {
-            var bands = [
-                { band: 0, gain: args[1] },
-                { band: 1, gain: args[2] },
-                { band: 2, gain: args[3] },
-                { band: 3, gain: args[4] },
-                { band: 4, gain: args[5] },
-                { band: 5, gain: args[6] },
-                { band: 6, gain: args[7] },
-                { band: 7, gain: args[8] },
-                { band: 8, gain: args[9] },
-                { band: 9, gain: args[10] },    
-                { band: 10, gain: args[11] },    
-                { band: 11, gain: args[12] },
-                { band: 12, gain: args[13] },   
-                { band: 13, gain: args[14] }    
-            ];
-
-            thing.setDescription(`Custom Equalizer mode is ON`);
+            embed.setDescription(`Soft mode is ON.`);
             player.setEQ(...bands);
 
         } else if (args[0] === "Off" || args[0] == 'off') {
-            thing.setDescription(`Equalizer mode is OFF`);
+            embed.setDescription(`Equalizer mode is OFF.`);
             player.clearEQ();
         }
         
-        return message.reply({embeds: [thing]});
+        return message.reply({embeds: [embed]});
     }
 };

@@ -1,4 +1,3 @@
-
 const { embedNeutral } = require("../../config.js");
 const { MessageEmbed, MessageActionRow, MessageButton} = require("discord.js");
 const { convertTime } = require('../../utils/convert.js');
@@ -6,9 +5,9 @@ const { convertTime } = require('../../utils/convert.js');
 module.exports = async (client, player, track, payload) => {
 	
 		let embed = new MessageEmbed()
-		.setDescription(`Started Playing\n[${track.title}](${track.uri}) \n\`[${convertTime(track.duration)}]\``)
-		.setThumbnail(track.displayThumbnail("3"))
-		.setColor(embedNeutral)
+			.setDescription(`Started playing\n[${track.title}](${track.uri}) \n\`[${convertTime(track.duration)}]\``)
+			.setThumbnail(track.displayThumbnail("3"))
+			.setColor(embedNeutral)
 
 		const But1 = new MessageButton().setCustomId("vdown").setEmoji("🔉").setStyle("PRIMARY");	
 		const But2 = new MessageButton().setCustomId("stop").setEmoji("⏹️").setStyle("SECONDARY");
@@ -44,7 +43,7 @@ module.exports = async (client, player, track, payload) => {
 
 				let amount = Number(player.volume) - 10;
 				await player.setVolume(amount);
-				i.reply({content: `Volume set to ${amount} `, ephemeral: true});
+				i.reply({content: `Volume set to ${amount}.`, ephemeral: true});
 
 			} else if (i.customId === "stop") {
 
@@ -52,10 +51,9 @@ module.exports = async (client, player, track, payload) => {
 					return collector.stop();
 				}
 
-				await player.stop();
-				await player.queue.clear();
+				await player.destroy();
 
-				i.reply({content: "Music Is Stopped", ephemeral: true});
+				i.reply({content: "Stopped the music.", ephemeral: true});
 				return collector.stop();
 
 			} else if (i.customId === "pause") {
@@ -64,8 +62,8 @@ module.exports = async (client, player, track, payload) => {
 					return collector.stop();
 				}
 				player.pause(!player.paused);
-				const Text = player.paused ? "paused" : "resume";
-				i.reply({content: `I have ${Text} the music!`, ephemeral: true});
+				const Text = player.paused ? "Paused" : "Resume";
+				i.reply({content: `${Text} the music.`, ephemeral: true});
 
 			} else if (i.customId === "skip") {
 				if (!player) {
@@ -73,7 +71,7 @@ module.exports = async (client, player, track, payload) => {
 				}
 
 				await player.stop();
-				i.reply({content: "I have skipped to the next song!", ephemeral: true});
+				i.reply({content: "Skipped to the next song.", ephemeral: true});
 
 				if (track.length === 1) {
 					return collector.stop();
@@ -86,10 +84,10 @@ module.exports = async (client, player, track, payload) => {
 
 				let amount = Number(player.volume) + 10;
 
-			if(amount >= 200) return i.reply({ content: `Cannot higher the player volume further more.`, ephemeral: true });
+			if(amount >= 200) return i.reply({ content: `Cannot turn up the player volume further more.`, ephemeral: true });
 			
 			await player.setVolume(amount);
-			i.reply({content: `Volume set to ${amount} `, ephemeral: true});
+			i.reply({content: `Volume set to ${amount}.`, ephemeral: true});
 			return;
 		}
 	});
