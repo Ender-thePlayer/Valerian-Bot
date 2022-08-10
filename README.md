@@ -14,16 +14,32 @@ Here is how to set up the code.
 
 Create a new file called `.env` and and put the stuff below in that file:
 ```
+# Bot Token [Required]
 TOKEN = Your Bot Token
-PREFIX = Your Bot Prefix
-OWNERID = Your Id
+
+# Mongo Database Connection String [Required]
+MONGO_URL = Your MongoDB Database Url
+
+# SPOTFIY [Required for Spotify Support]
 SPOTIFYID = Your Spotify App Id
 SPOTIFYSECRET = Your Spotify App Secret Client
-MONGO_URL = Your MongoDB Database Url
-COlOR_SUCCESS = #00ff0a
-COLOR_NEUTRAL = #303236
-COLOR_ERROR = #ff0004
+
+# Bot Stuff [Required]
+PREFIX = Your Bot Prefix
+OWNERID = Your Id
 LOGS = Your Logs Channel Id
+WKO = Your Welcome Message Channel Id
+LVE = Your Leave Message Channel Id
+
+# Colors [Not Required]
+#COlOR_SUCCESS = #00ff0a
+#COLOR_NEUTRAL = #303236
+#COLOR_ERROR = #ff0004s
+
+# API Keys [Required for Nodes]
+HOST = Your/Public Lavalink Server Host Ip
+PASSWORD = Your/Public Lavalink Server Host Password
+ID = An ID (A Name, A Number etc.)
 ```
 
 ## Step 2
