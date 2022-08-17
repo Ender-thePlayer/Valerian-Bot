@@ -13,7 +13,7 @@ module.exports = {
     args: false,
     usage: "[command]",
     permission: [],
-    owner: true,
+    owner: false,
     execute: async (message, args, client) => {
 
 		const res = await pre.findOne({ guildid: message.guild.id })
