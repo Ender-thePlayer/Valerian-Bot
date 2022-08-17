@@ -18,7 +18,7 @@ module.exports = {
 			.addFields(
 				{ name: 'Bot Latency', value:`\`\`\`ini\n[ ${Date.now() - message.createdTimestamp}ms ]\n\`\`\``, inline: true },
 				{ name: 'Api Latency', value:`\`\`\`ini\n[ ${client.ws.ping}ms ]\n\`\`\``, inline: true },
-				{ name: 'Server Location', value:`\`\`\`ini\n[railwayapp_us-west]\n\`\`\``, inline: true },
+				{ name: 'Server Location', value:`\`\`\`ini\n[europe_de]\n\`\`\``, inline: true },
 			)
 			
 		message.reply( { embeds: [embed] })
