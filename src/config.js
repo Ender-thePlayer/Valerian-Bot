@@ -20,11 +20,11 @@ module.exports = {
 	nodes: {
 		
 		host: process.env.HOST,
-		port: 80,
+		port: 443,
 		password: process.env.PASSWORD,
 		id: process.env.ID,
 		retryDelay: 3000,
-		secure: false
+		secure: true
 	
 	},
 
