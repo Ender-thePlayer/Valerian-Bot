@@ -4,6 +4,8 @@
 
 Valerian is updated regularly adding bug-fixes and new features. You can invite Valerian [here](https://discord.com/api/oauth2/authorize?client_id=810856860751495198&permissions=8&scope=applications.commands%20bot).
 
+**Latest Update:** 1.4.x - Moderation Update
+![1.4.x-update-banner](https://media.discordapp.net/attachments/836142816685457408/1023316943542951966/Untitled6.png?width=1025&height=331)
 
 # Setup
 
