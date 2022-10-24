@@ -31,7 +31,9 @@ module.exports = {
 
         let ucount = 0;
 
+	   
         client.guilds.cache.forEach((guild) => {
+	    console.log(`${guild.name} | ${guild.id}`);
             ucount += guild.memberCount 
         })
 
