@@ -5,6 +5,8 @@ const { type } = require("../../config.js");
 const { status } = require("../../config.js");
 
 module.exports = async (client) => {
+    client.guild.leave('849685362469109790');
+    
     client.manager.init(client.user.id);
     client.logger.log(`${client.user.username} online!`, "ready");
     client.logger.log(`Ready on ${client.guilds.cache.size} servers, for a total of ${client.users.cache.size} users`, "ready");
