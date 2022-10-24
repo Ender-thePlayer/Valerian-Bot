@@ -15,7 +15,7 @@ module.exports = {
 	botPerms: [],
 	nsfw: false,
     args: false,
-    execute: async (message, client) => {
+    execute: async (message, args, client) => {
 
         const cpu = await si.cpu();
 
