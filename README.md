@@ -2,10 +2,8 @@
 
 **Valerian** is a multi purpose discord bot, based on [LavaMusic](https://github.com/brblacky/lavamusic) with a lot of commands ranging from Utility to Fun Commands.
 
-Valerian is updated regularly adding bug-fixes and new features. You can invite Valerian [here](https://discord.com/api/oauth2/authorize?client_id=810856860751495198&permissions=8&scope=applications.commands%20bot).
+Valerian is updated regularly adding bug-fixes and new features. You can invite Valerian [here](https://discord.com/api/oauth2/authorize?client_id=810856860751495198&userPermss=8&scope=applications.commands%20bot).
 
-**Latest Update:** 1.4.x - Moderation Update
-![1.4.x-update-banner](https://media.discordapp.net/attachments/836142816685457408/1023316943542951966/Untitled6.png?width=1025&height=331)
 
 # Setup
 
@@ -16,32 +14,16 @@ Here is how to set up the code.
 
 Create a new file called `.env` and and put the stuff below in that file:
 ```
-# Bot Token [Required]
 TOKEN = Your Bot Token
-
-# Mongo Database Connection String [Required]
-MONGO_URL = Your MongoDB Database Url
-
-# SPOTFIY [Required for Spotify Support]
-SPOTIFYID = Your Spotify App Id
-SPOTIFYSECRET = Your Spotify App Secret Client
-
-# Bot Stuff [Required]
 PREFIX = Your Bot Prefix
 OWNERID = Your Id
+SPOTIFYID = Your Spotify App Id
+SPOTIFYSECRET = Your Spotify App Secret Client
+MONGO_URL = Your MongoDB Database Url
+COlOR_SUCCESS = #00ff0a
+COLOR_NEUTRAL = #303236
+COLOR_ERROR = #ff0004
 LOGS = Your Logs Channel Id
-WKO = Your Welcome Message Channel Id
-LVE = Your Leave Message Channel Id
-
-# Colors [Not Required]
-#COlOR_SUCCESS = #00ff0a
-#COLOR_NEUTRAL = #303236
-#COLOR_ERROR = #ff0004s
-
-# API Keys [Required for Nodes]
-HOST = Your/Public Lavalink Server Host Ip
-PASSWORD = Your/Public Lavalink Server Host Password
-ID = An ID (A Name, A Number etc.)
 ```
 
 ## Step 2
