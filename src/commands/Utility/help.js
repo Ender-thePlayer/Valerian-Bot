@@ -3,17 +3,20 @@ const { embedError } = require("../../config.js");
 const { prefix } = require("../../config.js");
 const pre = require("../../schema/prefix.js");
 const { readdirSync } = require("fs");
-const { MessageEmbed, MessageActionRow, MessageButton } = require("discord.js");
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder } = require("discord.js");
 
 module.exports = {
     name: "help",
     category: "Utility",
-    aliases: ['h'],
-    description: "Shows a list with all avable commands.",
-    args: false,
+    description: "Shows a list with all avable commands",
+    aliases: ["h"],
     usage: "[command]",
-    permission: [],
-    owner: false,
+	enabled: true,
+	owner: false,
+	userPerms: [],
+	botPerms: [],
+	nsfw: false,
+    args: false,
     execute: async (message, args, client) => {
 
 		const res = await pre.findOne({ guildid: message.guild.id })
@@ -43,33 +46,32 @@ module.exports = {
 			});
 			
 			let embeds = [
-				new MessageEmbed()
+				new EmbedBuilder()
 					.setThumbnail(client.user.displayAvatarURL())
 					.setColor(embedNeutral)
 					.setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
 					.setDescription(` Hi <@${message.author.id}>, I'm <@${client.user.id}>.\n
 					A multi-purpose bot with a lot of useful commands, that's on 24/7 and that's updated frequently for a good user experience.\n
-					We've changed the discord server to a new one [here](https://discord.gg/svzyfVBmH2).
-					To find more about a command, type \`\`${p}help [command]\`\`
+					We've added a slash command variant for every command.
+					To find more about a command, type \`\`${p}help [command]\`\` or \`\`/help [command]\`\`
 					\`\`\`\nPrefix: ${p}\nParameters: <> = required, [] = optional\`\`\`
 					**[Invite Bot](https://discord.com/api/oauth2/authorize?client_id=${client.user.id}&permissions=36768832&scope=applications.commands%20bot)** • **[Discord Server](https://discord.gg/svzyfVBmH2)**
 					`),
 	
-				new MessageEmbed()
-					.setDescription('These are all avable commands.')
+				new EmbedBuilder()
+					.setDescription('These are all avable commands (and SlashCommands)')
 					.setColor(embedNeutral)
 					.setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
 					.addFields(
-						{ name: 'Config Commands [2]', value: '``resetprefix`` ``setprefix``', inline: false },
-						{ name: 'Guild Commands [3]', value: '``avatar`` ``serverinfo`` ``userinfo``', inline: false },
-						{ name: 'Moderation Commands [5]', value: '``ban`` ``bansave`` ``clear`` ``kick`` ``slowmode``', inline: false },
-						{ name: 'Music Commands [15]', value: '``clearqueue`` ``filters`` ``loop`` ``nowplaying`` ``pause`` ``play`` ``queue`` ``remove`` ``resume`` ``seek`` ``shuffle`` ``skip`` ``skipto`` ``stop`` ``volume``', inline: false },
-						{ name: 'Utility Commands [5]', value: '``botstats`` ``changelogs`` ``help`` ``ping``', inline: false },
-
+						{ name: 'Config Commands [1]', value: '``prefix``', inline: false },
+						{ name: 'Fun Commands [1]', value: '``meme``', inline: false },
+						{ name: 'Guild Commands [4]', value: '``avatar`` ``serverinfo`` ``ticket`` ``userinfo``', inline: false },
+						{ name: 'Moderation Commands [11]', value: '``ban`` ``bye`` ``clear`` ``kick`` ``mute`` ``nickname`` ``slowmode`` ``softban`` ``unban`` ``unmute`` ``welcome``', inline: false },
+						{ name: 'Music Commands [14]', value: '``clearqueue`` ``filters`` ``loop`` ``nowplaying`` ``pause`` ``play`` ``queue`` ``remove`` ``resume`` ``seek`` ``shuffle`` ``skip`` ``stop`` ``volume``', inline: false },
+						{ name: 'Utility Commands [4]', value: '``botstats`` ``changelogs`` ``help`` ``ping``', inline: false },
 					),
-	
 			];
-	
+			
 			await pagination(message, embeds);
 
 		} else {
@@ -120,21 +122,21 @@ module.exports = {
                   	(c) => c.aliases && c.aliases.includes(args[0].toLowerCase()));
         
             if (!command) {
-				const embed = new MessageEmbed()
-					.setDescription(`Invalid command! Please use \`\`${p}help\`\` to see al avable commands.`)
+				const embed = new EmbedBuilder()
+					.setDescription(`Invalid command! Please use \`\`${p}help\`\` or \`\`/help\`\`to see al avable commands.`)
 					.setColor(embedError)
 					
 				return message.reply( { embeds: [embed] })
 			}
         
-            const embed = new MessageEmbed()
+            const embed = new EmbedBuilder()
 				.setDescription(command.name ? `Command: **${command.name}**` : 'Command: No name.')
 				.setColor(embedNeutral)
 				.setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
 				.addFields(
-					{ name: 'Description:', value: command.description ? `\`\`\`${command.description}\`\`\`` : 'No description for this command.',inline: false },
+					{ name: 'Description:', value: command.description ? `\`\`\`${command.description}\`\`\`` : '\`\`\`No description for this command.\`\`\`',inline: false },
 					{ name: 'Usage:', value: command.usage ? `\`\`\`${p}${command.name} ${command.usage}\`\`\`` : `\`\`\`${p}${command.name}\`\`\``,inline: false },
-					{ name: 'Aliases:', value:command.aliases ? `\`\`\`${command.aliases.join(', ')}\`\`\`` : 'No aliases for this command.', inline: false }
+					{ name: 'Aliases: (only for commands)', value:command.aliases ? `\`\`\`${command.aliases.join(', ')}\`\`\`` : '\`\`\`No aliases for this command.\`\`\`', inline: false }
 				)
 
             return message.reply({ embeds: [embed] });
@@ -143,11 +145,11 @@ module.exports = {
 };
 
 async function pagination(interaction, embeds) {
-	let allbuttons = new MessageActionRow().addComponents([
-//		new MessageButton().setStyle("SECONDARY").setCustomId("0").setLabel("<<"),
-		new MessageButton().setStyle("SECONDARY").setCustomId("1").setLabel("<"),
-		new MessageButton().setStyle("SECONDARY").setCustomId("3").setLabel(">"),
-//		new MessageButton().setStyle("SECONDARY").setCustomId("4").setLabel(">>"),
+	let allbuttons = new ActionRowBuilder().addComponents([
+//		new ButtonBuilder().setStyle("Secondary").setCustomId("0").setLabel("<<"),
+		new ButtonBuilder().setStyle("Secondary").setCustomId("1").setLabel("<"),
+		new ButtonBuilder().setStyle("Secondary").setCustomId("3").setLabel(">"),
+//		new ButtonBuilder().setStyle("Secondary").setCustomId("4").setLabel(">>"),
 	])
 
 	if (embeds.length === 1) {
@@ -175,12 +177,14 @@ async function pagination(interaction, embeds) {
 	if (interaction.deferred) {
 		sendMsg = await interaction.followUp({
 			embeds: [embeds[0]],
+			content: '**NOTICE:** This is in beta, all commands should work but if any bugs are to be found, please report them to me.',
 			components: [allbuttons],
 		})
 
 	} else {
 		sendMsg = await interaction.reply({
 			embeds: [embeds[0]],
+			content: '**NOTICE:** This is in beta, all commands should work but if any bugs are to be found, please report them to me.',
 			components: [allbuttons],
 		})
 	}

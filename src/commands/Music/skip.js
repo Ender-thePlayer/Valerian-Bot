@@ -1,16 +1,19 @@
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 const { embedNeutral } = require("../../config.js");
 const { embedError } = require("../../config.js");
 
 module.exports = {
 	name: "skip",
-	aliases: ["s"],
-	category: "Music",
-	description: "Skip the currently playing song.",
-	args: false,
+    category: "Music",
+	description: "Skips the currently playing song",
+    aliases: ["s"],
     usage: "",
-    permission: [],
-    owner: false,
+	enabled: true,
+	owner: false,
+	botPerms: [],
+	userPerms: [],
+    nsfw: false,
+    args: false,
     player: true,
     inVoiceChannel: true,
     sameVoiceChannel: true,
@@ -19,8 +22,8 @@ module.exports = {
 		const player = message.client.manager.get(message.guild.id);
 
         if (!player.queue.current) {
-            let embed = new MessageEmbed()
-                .setDescription("There is no music playing.")
+            let embed = new EmbedBuilder()
+                .setDescription("There is no song playing.")
                 .setColor(embedError);
         
             return message.reply({embeds: [embed]});
@@ -30,8 +33,9 @@ module.exports = {
 
         player.stop();
            
-		let embed = new MessageEmbed()
-            .setDescription(`**Skipped**\n[${song.title}](${song.uri})`)
+		let embed = new EmbedBuilder()
+            .setTitle(`Skipped`)
+            .setDescription(`[${song.title}](${song.uri})`)
             .setColor(embedNeutral)
             .setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
 

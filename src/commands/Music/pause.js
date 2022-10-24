@@ -1,15 +1,19 @@
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 const { embedError } = require("../../config.js");
 const { embedNeutral } = require("../../config.js");
 
 module.exports = {
     name: "pause",
     category: "Music",
-    description: "Pause the currently playing music.",
-    args: false,
+    description: "Pauses the currently playing song",
+    aliases: "",
     usage: "",
-    permission: [],
-    owner: false,
+	enabled: true,
+	owner: false,
+	botPerms: [],
+	userPerms: [],
+    nsfw: false,
+    args: false,
     player: true,
     inVoiceChannel: true,
     sameVoiceChannel: true,
@@ -18,15 +22,15 @@ module.exports = {
 		const player = message.client.manager.get(message.guild.id);
 
         if (!player.queue.current) {
-            let embed = new MessageEmbed()
-                .setDescription("There is no music playing.")
+            let embed = new EmbedBuilder()
+                .setDescription("There is no song playing.")
                 .setColor(embedError);
                 
         return message.reply({embeds: [embed]});
         }
 
         if (player.paused) {
-            let embed = new MessageEmbed()
+            let embed = new EmbedBuilder()
                 .setDescription(`The player is already paused.`)
                 .setColor(embedError)
 
@@ -37,8 +41,9 @@ module.exports = {
 
         const song = player.queue.current;
 
-        let embed = new MessageEmbed()
-            .setDescription(`**Paused**\n[${song.title}](${song.uri})`)
+        let embed = new EmbedBuilder()
+            .setTitle(`Paused`)
+            .setDescription(`[${song.title}](${song.uri})`)
             .setColor(embedNeutral)
             .setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
 

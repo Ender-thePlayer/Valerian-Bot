@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 const { convertTime } = require('../../utils/convert.js');
 const { progressbar } = require('../../utils/progressbar.js')
 const { embedError } = require("../../config.js");
@@ -6,13 +6,16 @@ const { embedNeutral } = require("../../config.js");
 
 module.exports = {
     name: "nowplaying",
-    aliases: ["np"],
     category: "Music",
-    description: "Show now playing song.",
-    args: false,
+    description: "Shows what's the currently playing song",
+    aliases: ["np"],
     usage: "",
-    permission: [],
-    owner: false,
+	enabled: true,
+	owner: false,
+	botPerms: [],
+	userPerms: [],
+    nsfw: false,
+    args: false,
     player: true,
     inVoiceChannel: false,
     sameVoiceChannel: false,
@@ -21,8 +24,8 @@ module.exports = {
         const player = message.client.manager.get(message.guild.id);
 
         if (!player.queue.current) {
-            let embed = new MessageEmbed()
-                .setDescription("There is no music playing.")
+            let embed = new EmbedBuilder()
+                .setDescription("There is no song playing.")
                 .setColor(embedError);
 
             return message.reply({embeds: [embed]});
@@ -32,13 +35,17 @@ module.exports = {
         var total = song.duration;
         var current = player.position;
         
-        let embed = new MessageEmbed()
-            .setDescription(`**Now Playing**\n[${song.title}](${song.uri}) - \`[${convertTime(song.duration)}]\`\n\n\`${progressbar(player)}\n${convertTime(current)} / ${convertTime(total)}\``)
-            .setThumbnail(song.displayThumbnail("3"))
+        let embed = new EmbedBuilder()
+            .setTitle(`Now Playing`)   
+            .setDescription(`[${song.title}](${song.uri})\n\n\`${progressbar(player)}\n${convertTime(current)} / ${convertTime(total)}\`\n\u200b`)
             .setColor(embedNeutral)
+            .setThumbnail(song.displayThumbnail("hqdefault"))
             .setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
+			.addFields(
+				{ name: 'Song Duration', value: `\`${convertTime(song.duration)}\``, inline: true },
+				{ name: 'Position in Queue', value: `\`${player.queue.length}\``, inline: true },
+			)
 
         return message.reply({embeds: [embed]})
-
     }
 }

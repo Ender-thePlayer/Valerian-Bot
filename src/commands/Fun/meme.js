@@ -1,19 +1,20 @@
 const { embedNeutral } = require("../../config.js");
-const { embedError } = require("../../config.js");
-const { embedSuccess } = require("../../config.js");
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 const redditFetch = require('reddit-fetch');
 
 module.exports = {
     name: "meme",
     category: "Fun",
+    description: "Sends a meme from the r/memes subreddit.",
     aliases: ['m'],
-    description: "Get a random hot meme from r/memes.",
+    usage: [],
+	enabled: true,
+	owner: false,
+	botPerms: [],
+	userPerms: [],
+    nsfw: false,
     args: false,
-    usage: "",
-    permission: [],
-    owner: false,
-    execute: async (message, args, client, prefix) => {
+    execute: async (message) => {
 
         redditFetch({
             subreddit: 'memes',
@@ -24,7 +25,7 @@ module.exports = {
             allowVideo: true
             
         }).then((post) => {
-            let embed = new MessageEmbed()
+            let embed = new EmbedBuilder()
                 .setDescription(`${post.title}`)
                 .setImage(`${post.url}`)
                 .setColor(embedNeutral)

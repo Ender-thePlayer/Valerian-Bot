@@ -1,36 +1,41 @@
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 const { embedSuccess } = require("../../config.js");
 const { embedError } = require("../../config.js");
 
 module.exports = {
-	name: "filter",
+	name: "filters",
     category: "Music",
-    aliases: [ "eq", "equalizer" ],
-    description: "EQ for music.",
+    description: "Adjusts how song sounds",
+    aliases: [ "eq", "equalizer", "filter" ],
+    usage: "\n | party\n | bass\n | radio\n | pop\n | trablebass\n | bassboost\n | soft\n | off",
+	enabled: true,
+	owner: false,
+	botPerms: [],
+	userPerms: [],
+    nsfw: false,
     args: true,
-    usage: "<party / bass / radio / pop / trablebass / soft / off>",
-    permission: [],
-    owner: false,
     player: true,
     inVoiceChannel: true,
     sameVoiceChannel: true,
-	 execute: async (message, args) => {
+	execute: async (message, args) => {
         
         const player = message.client.manager.get(message.guild.id);
 
+        let preset = args[0].toLowerCase()
+
         if (!player.queue.current) {
-			let embed = new MessageEmbed()
-                .setDescription(`There is no music playing!`)
+			let embed = new EmbedBuilder()
+                .setDescription(`There is no song playing!`)
                 .setColor(embedError)
 
 		    return message.reply( { embeds: [embed] })
         }
 
-        let embed = new MessageEmbed()
+        let embed = new EmbedBuilder()
             .setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
             .setColor(embedSuccess)
 
-        if (args[0] == 'party') {
+        if (preset == 'party') {
             var bands = [
                 { band: 0, gain: -1.16 },
                 { band: 1, gain: 0.28 },
@@ -46,7 +51,7 @@ module.exports = {
             embed.setDescription(`Party mode is ON.`);
             player.setEQ(...bands);
 
-        } else if (args[0] == 'bass') {
+        } else if (preset == 'bass') {
             var bands = [
                 { band: 0, gain: 0.6 },
                 { band: 1, gain: 0.7 },
@@ -68,7 +73,7 @@ module.exports = {
             embed.setDescription(`Bass mode is ON.`);
             player.setEQ(...bands);
 
-        } else if (args[0] == 'radio') {
+        } else if (preset == 'radio') {
             var bands = [
                 { band: 0, gain: 0.65 },
                 { band: 1, gain: 0.45 },
@@ -90,7 +95,7 @@ module.exports = {
             embed.setDescription(`Radio mode is ON.`);
             player.setEQ(...bands);
 
-        } else if (args[0] == 'pop') {
+        } else if (preset == 'pop') {
             var bands = [
                 { band: 0, gain: -0.25 },
                 { band: 1, gain: 0.48 },
@@ -112,7 +117,7 @@ module.exports = {
             embed.setDescription(`Pop mode is ON.`);
             player.setEQ(...bands);
 
-        } else if (args[0] == 'trablebass') {
+        } else if (preset == 'trablebass') {
             var bands = [
                 { band: 0, gain: 0.6 },
                 { band: 1, gain: 0.67 },
@@ -134,15 +139,15 @@ module.exports = {
             embed.setDescription(`Trablebass mode is ON.`);
             player.setEQ(...bands);
 
-        } else if (args[0] === "Bassboost" || args[0] == 'bassboost') {
+        } else if (preset == 'bassboost') {
             var bands = new Array(7).fill(null).map((_, i) => (
                 { band: i, gain: 0.25 }
             ));
-
+            
             embed.setDescription(`Bassboost mode is ON.`);
             player.setEQ(...bands);
 
-        } else if (args[0] == 'soft') {
+        } else if (preset == 'soft') {
             var bands =  [
                 { band: 0, gain: 0 },
                 { band: 1, gain: 0 },
@@ -164,7 +169,7 @@ module.exports = {
             embed.setDescription(`Soft mode is ON.`);
             player.setEQ(...bands);
 
-        } else if (args[0] === "Off" || args[0] == 'off') {
+        } else if (preset == 'off') {
             embed.setDescription(`Equalizer mode is OFF.`);
             player.clearEQ();
         }

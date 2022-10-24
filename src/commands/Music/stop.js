@@ -1,15 +1,19 @@
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 const { embedNeutral } = require("../../config.js");
 const { embedError } = require("../../config.js");
 
 module.exports = {
-  	name: "stop",
+    name: "stop",
     category: "Music",
-    description: "Stops the music.",
-    args: false,
+    description: "Stops the currently playing song and clears the queue",
+    aliases: "",
     usage: "",
-    permission: [],
-    owner: false,
+	enabled: true,
+	owner: false,
+	botPerms: [],
+	userPerms: [],
+    nsfw: false,
+    args: false,
     player: true,
     inVoiceChannel: true,
     sameVoiceChannel: true,
@@ -18,8 +22,8 @@ module.exports = {
         const player = message.client.manager.get(message.guild.id);
 
         if (!player.queue.current) {
-            let embed = new MessageEmbed()
-                .setDescription("There is no music playing.")
+            let embed = new EmbedBuilder()
+                .setDescription("There is no song playing.")
                 .setColor(embedError);
 
             return message.reply({embeds: [embed]});
@@ -32,8 +36,8 @@ module.exports = {
 
         player.destroy();
 
-        let embed = new MessageEmbed()
-            .setDescription(`Stopped the music and cleared the queue.`)
+        let embed = new EmbedBuilder()
+            .setDescription(`Stopped the song and cleared the queue.`)
             .setColor(embedNeutral)
             .setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
 

@@ -1,15 +1,18 @@
 const { embedNeutral } = require("../../config.js");
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 
 module.exports = {
     name: "avatar",
-    category: "User",
-    aliases: ['av'],
-    description: "Get a users Discord avatar.",
+    category: "Guild",
+    description: "Sends your or a user's Discord avatar",
+	aliases: ['av'],
+    usage: "[user]",
+	enabled: true,
+	owner: false,
+	botPerms: [],
+	userPerms: [],
+    nsfw: false,
     args: false,
-    usage: "",
-    permission: [],
-    owner: false,
     execute: async (message, args, client) => {
 
         let member = message.mentions.members.first() || message.member;
@@ -22,7 +25,7 @@ module.exports = {
         const x2048 = member.user.displayAvatarURL({ format: "png", dynamic: true, size: 2048 });
         const x4096 = member.user.displayAvatarURL({ format: "png", dynamic: true, size: 4096 });
 
-        let embed = new MessageEmbed()
+        let embed = new EmbedBuilder()
             .setDescription(`**${member.user.tag}**'s Avatar\n\nLinks: [x64](${x64}) | [x128](${x128}) | [x256](${x256}) | [x512](${x512}) | [x1024](${x1024})`)
             .setImage(x512)
             .setColor(embedNeutral)

@@ -1,16 +1,19 @@
 const { embedNeutral } = require("../../config.js");
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 const moment = require('moment');
 
 module.exports = {
     name: "serverinfo",
-    category: "User",
-    aliases: [ 'si' ],
-    description: "Get the server info.",
+    category: "Guild",
+    description: "Sends the info about the server",
+	aliases: ['si'],
+    usage: [],
+	enabled: true,
+	owner: false,
+	botPerms: [],
+	userPerms: [],
+    nsfw: false,
     args: false,
-    usage: ``,
-    permission: [],
-    owner: false,
     execute: async (message, args, client) => {
 
         let day = moment(message.guild.createdTimestamp).format('dddd, MMMM Do YYYY')
@@ -28,7 +31,7 @@ module.exports = {
         let region = message.guild.preferredLocale
         let boosts = message.guild.premiumSubscriptionCount >= 1 ? `${message.guild.premiumSubscriptionCount} boosts` : `There are no boosts`
 
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
             .setColor(embedNeutral)
             .setThumbnail(message.guild.iconURL({dynamic : true}))
             .setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})

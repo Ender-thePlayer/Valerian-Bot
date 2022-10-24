@@ -1,24 +1,27 @@
 const { embedNeutral } = require("../../config.js");
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 
 module.exports = {
-    name: "ping",
+	name: "ping",
     category: "Utility",
-    aliases: ['latency'],
-    description: "Shows the bot's latency.",
-    args: false,
+    description: "Shows the bot's latency",
+    aliases: ["latency"],
     usage: "",
-    permission: [],
-    owner: false,
-    execute: async (message, args, client, prefix) => {
+	enabled: true,
+	owner: false,
+	userPerms: [],
+	botPerms: [],
+	nsfw: false,
+    args: false,
+    execute: async (message, client) => {
 
-		const embed = new MessageEmbed()
+		const embed = new EmbedBuilder()
 			.setColor(embedNeutral)
-      .setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
+      		.setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
 			.addFields(
 				{ name: 'Bot Latency', value:`\`\`\`ini\n[ ${Date.now() - message.createdTimestamp}ms ]\n\`\`\``, inline: true },
 				{ name: 'Api Latency', value:`\`\`\`ini\n[ ${client.ws.ping}ms ]\n\`\`\``, inline: true },
-				{ name: 'Server Location', value:`\`\`\`ini\n[europe_de]\n\`\`\``, inline: true },
+				{ name: 'Server Location', value:`\`\`\`ini\n[railwayapp_us-west]\n\`\`\``, inline: true },
 			)
 			
 		message.reply( { embeds: [embed] })

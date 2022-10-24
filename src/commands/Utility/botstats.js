@@ -1,18 +1,21 @@
 const { embedNeutral } = require("../../config.js");
-const { MessageEmbed, version } = require("discord.js");
+const { EmbedBuilder, version } = require("discord.js");
 const os = require('os')
 const si = require('systeminformation');
 
 module.exports = {
     name: "botstats",
     category: "Utility",
+    description: "Shows info about the bot",
     aliases: [ 'botinfo', 'i', 'info' ],
-    description: "Shows bot information.",
+    usage: "",
+	enabled: true,
+	owner: false,
+	userPerms: [],
+	botPerms: [],
+	nsfw: false,
     args: false,
-    usage: '',
-    permission: [],
-    owner: false,
-    execute: async (message, args, client) => {
+    execute: async (message, client) => {
 
         const cpu = await si.cpu();
 
@@ -32,7 +35,7 @@ module.exports = {
             ucount += guild.memberCount 
         })
 
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
             .setColor(embedNeutral)
             .setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
 

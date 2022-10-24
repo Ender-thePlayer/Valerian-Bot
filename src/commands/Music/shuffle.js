@@ -1,25 +1,29 @@
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 const { embedNeutral } = require("../../config.js");
 const { embedError } = require("../../config.js");
 
 module.exports = {
-  	name: "shuffle",
+    name: "shuffle",
     category: "Music",
-    description: "Shuffle queue.",
-    args: false,
+    description: "Shuffles the queue",
+    aliases: "",
     usage: "",
-    permission: [],
-    owner: false,
+	enabled: true,
+	owner: false,
+	botPerms: [],
+	userPerms: [],
+    nsfw: false,
+    args: false,
     player: true,
     inVoiceChannel: true,
     sameVoiceChannel: true,
- execute: async (message, client) => {
+    execute: async (message, client) => {
     
 		const player = message.client.manager.get(message.guild.id);
 
         if (!player.queue.current) {
-            let embed = new MessageEmbed()
-                .setDescription("There is no music playing.")
+            let embed = new EmbedBuilder()
+                .setDescription("There is no song playing.")
                 .setColor(embedError);
 
             return message.reply({embeds: [embed]});
@@ -27,7 +31,7 @@ module.exports = {
 
         player.queue.shuffle();
         
-        let embed = new MessageEmbed()
+        let embed = new EmbedBuilder()
             .setDescription(`Shuffled the queue`)
             .setColor(embedNeutral)
             .setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})

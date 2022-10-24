@@ -1,54 +1,44 @@
 const { embedError } = require("../../config.js");
 const { embedSuccess } = require("../../config.js");
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 
 module.exports = {
     name: "ban",
     category: "Moderation",
-    aliases: [],
-    description: "Ban a user from the server.",
-    args: false,
-    usage: `<user> [reason]`,
-    permission: ['BAN_MEMBERS'],
-    owner: false,
+    description: "Bans a user from the server",
+	aliases: "",
+    usage: "<user>",
+	enabled: true,
+	owner: false,
+	botPerms: ['BanMembers'],
+	userPerms: ['BanMembers'],
+    nsfw: false,
+    args: true,
     execute: async (message, args, client) => {
 
-        const target = message.mentions.users.first(); 
-        const mentionMember = message.mentions.members.first();
-        let reason = args.slice(1).join(" "); 
-        if (!reason) reason = "None";
+        let target = message.mentions.members.first();
+        if (!target) return;
 
-        if (!args.length) {
-            let embed = new MessageEmbed()
-                .setDescription('Please mention somebody to ban!')
-                .setColor(embedError)
-
-            return message.reply( { embeds: [embed] })
-        }
-
-        if (!mentionMember) {
-            let embed = new MessageEmbed()
-                .setDescription('That isn`t a user!')
-                .setColor(embedError)
-
-            return message.reply( { embeds: [embed] })
-        };
-
-        if(!mentionMember.bannable) {
-            let embed = new MessageEmbed()
+        if(!target.bannable) {
+            let embed = new EmbedBuilder()
                 .setDescription(`This user is a moderator!`)
                 .setColor(embedError)
 
             return message.reply( { embeds: [embed] })
         };
 
-        mentionMember.ban({ days: 1, reason: reason })
+        try{
+            target.ban()
 
-        const embed = new MessageEmbed()
-            .setDescription(`${target} was banned with the reason: **${reason}**!`)
-            .setColor(embedSuccess)
-            .setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
+            const embed = new EmbedBuilder()
+                .setDescription(`${target} was banned!`)
+                .setColor(embedSuccess)
+                .setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
 
-        message.reply( { embeds: [embed] })
+            message.reply( { embeds: [embed] })
+            
+        } catch(error) {
+            return;
+        }
     }
 }

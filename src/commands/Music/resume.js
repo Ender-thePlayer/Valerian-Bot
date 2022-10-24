@@ -1,16 +1,19 @@
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 const { embedNeutral } = require("../../config.js");
 const { embedError } = require("../../config.js");
 
 module.exports = {
 	name: "resume",
-    aliases: ["r"],
     category: "Music",
-    description: "Resume currently playing music.",
-    args: false,
+    description: "Resumes currently playing song",
+    aliases: ["r"],
     usage: "<number of song in queue>",
-    permission: [],
-    owner: false,
+	enabled: true,
+	owner: false,
+	botPerms: [],
+	userPerms: [],
+    nsfw: false,
+    args: false,
     player: true,
     inVoiceChannel: true,
     sameVoiceChannel: true,
@@ -20,15 +23,15 @@ module.exports = {
         const song = player.queue.current;
 
         if (!player.queue.current) {
-            let embed = new MessageEmbed()
-            .setDescription("There is no music playing.")
+            let embed = new EmbedBuilder()
+            .setDescription("There is no song playing.")
             .setColor(embedError);
 
         return message.reply({embeds: [embed]});
         }
 
         if (!player.paused) {
-            let embed = new MessageEmbed()
+            let embed = new EmbedBuilder()
                 .setDescription(`The player is already **resumed**.`)
                 .setColor(embedError);
 
@@ -37,8 +40,9 @@ module.exports = {
 
         player.pause(false);
 
-        let embed = new MessageEmbed()
-            .setDescription(`**Resumed**\n[${song.title}](${song.uri})`)
+        let embed = new EmbedBuilder()
+            .setTitle(`Resumed`)
+            .setDescription(`[${song.title}](${song.uri})`)
             .setColor(embedNeutral)
             .setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
 

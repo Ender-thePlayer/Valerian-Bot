@@ -1,16 +1,19 @@
 const { embedError } = require("../../config.js");
 const { embedSuccess } = require("../../config.js");
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 
 module.exports = {
     name: "clearqueue",
-    aliases: ["cq"],
     category: "Music",
-  	description: "Clears the queue.",
-	args: false,
+  	description: "Clears the song queue.",
+    aliases: ["cq"],
     usage: "",
-    permission: [],
-    owner: false,
+	enabled: true,
+	owner: false,
+	botPerms: [],
+	userPerms: [],
+    nsfw: false,
+    args: false,
     player: false,
     inVoiceChannel: false,
     sameVoiceChannel: false,
@@ -19,8 +22,8 @@ module.exports = {
 		const player = message.client.manager.get(message.guild.id);
 
         if (!player.queue.current) {
-			let embed = new MessageEmbed()
-			.setDescription(`There is no music playing!`)
+			let embed = new EmbedBuilder()
+			.setDescription(`There is no song playing!`)
             .setColor(embedError)
 
 		    return message.reply( { embeds: [embed] });
@@ -28,13 +31,12 @@ module.exports = {
 
 		player.queue.clear();
 
-        let embed = new MessageEmbed()
+        let embed = new EmbedBuilder()
             .setDescription(`Removed all songs from the queue`)
             .setColor(embedSuccess)
             .setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
         
         await message.reply( { embeds: [embed] });
         
-        return;  
     }
 };

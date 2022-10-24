@@ -1,15 +1,19 @@
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 const { embedNeutral } = require("../../config.js");
 const { embedError } = require("../../config.js");
 
 module.exports = {
-  	name: "remove",
+    name: "remove",
     category: "Music",
-  	description: "Remove song from the queue.",
-	args: true,
+    description: "Removes song from the queue",
+    aliases: "",
     usage: "<number of song in queue>",
-    permission: [],
-    owner: false,
+	enabled: true,
+	owner: false,
+	botPerms: [],
+	userPerms: [],
+    nsfw: false,
+    args: true,
     player: true,
     inVoiceChannel: true,
     sameVoiceChannel: true,
@@ -18,8 +22,8 @@ module.exports = {
 		const player = message.client.manager.get(message.guild.id);
 
         if (!player.queue.current) {
-            let embed = new MessageEmbed()
-                .setDescription("There is no music playing.")
+            let embed = new EmbedBuilder()
+                .setDescription("There is no song playing.")
                 .setColor(embedError);
                     
             return message.reply({embeds: [embed]});
@@ -29,7 +33,7 @@ module.exports = {
         if (position > player.queue.size) {
             const number = (position + 1);
 
-            let embed = new MessageEmbed()
+            let embed = new EmbedBuilder()
                 .setDescription(`No songs at number ${number}.\nTotal Songs: ${player.queue.size}`)
                 .setColor(embedError);
 
@@ -39,8 +43,9 @@ module.exports = {
         const song = player.queue[position]
             player.queue.remove(position);
 
-            let embed = new MessageEmbed()
-                .setDescription(` Removed\n[${song.title}](${song.uri})`)
+            let embed = new EmbedBuilder()
+                .setTitle(`Removed`)
+                .setDescription(`[${song.title}](${song.uri})`)
                 .setColor(embedNeutral)
                 .setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
 

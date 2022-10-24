@@ -1,54 +1,44 @@
 const { embedError } = require("../../config.js");
 const { embedSuccess } = require("../../config.js")
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 
 module.exports = {
     name: "kick",
     category: "Moderation",
-    aliases: [],
-    description: "Kick a user from the server.",
-    args: false,
-    usage: `<user> [reason]`,
-    permission: ['KICK_MEMBERS'],
-    owner: false,
+    description: "Kicks a user from the server",
+	aliases: "",
+    usage: "<user>",
+	enabled: true,
+	owner: false,
+	botPerms: ['KickMembers'],
+	userPerms: ['KickMembers'],
+    nsfw: false,
+    args: true,
     execute: async (message, args, client) => {
 
-        const target = message.mentions.users.first(); 
-        const mentionMember = message.mentions.members.first();
-        let reason = args.slice(1).join(" "); 
-        if (!reason) reason = "None";
+        let target = message.mentions.members.first();
+        if (!target) return;
 
-        if (!args.length) {
-            let embed = new MessageEmbed()
-                .setDescription('Please mention somebody to kick!')
-                .setColor(embedError)
-
-            return message.reply( { embeds: [embed] })
-        }
-    
-        if (!mentionMember) {
-            let embed = new MessageEmbed()
-                .setDescription('That isn`t a user!')
-                .setColor(embedError)
-
-            return message.reply( { embeds: [embed] })
-        };
-
-        if(!mentionMember.kickable) {
-            let embed = new MessageEmbed()
+        if(!target.kickable) {
+            let embed = new EmbedBuilder()
                 .setDescription(`This user is a moderator!`)
                 .setColor(embedError)
 
             return message.reply( { embeds: [embed] })
         };
+        
+        try{
+            target.kick()
 
-        mentionMember.kick({ reason: reason })
-
-        const embed = new MessageEmbed()
-            .setDescription(`${target} was kicked with the reason: **${reason}**!`)
-            .setColor(embedSuccess)
-            .setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
-
-        message.reply( { embeds: [embed] })
+            const embed = new EmbedBuilder()
+                .setDescription(`${target} was kicked!`)
+                .setColor(embedSuccess)
+                .setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
+    
+            message.reply( { embeds: [embed] })
+            
+        } catch(error) {
+            return;
+        }
     }
 }
