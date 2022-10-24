@@ -12,7 +12,7 @@ module.exports = {
 	embedSuccess: "#00ff0a",
 	status: "", //[online, idle, dnd, invisible]
 	type: "", //[PLAYING, LISTENING, WATCHING, COMPETING]
-	message: "PRE-RELEASE TESTING",
+	message: "",
 	interactions: {
 		slash: true, // Should the interactions be enabled
 		global: true, // Should the interactions be registered globally
