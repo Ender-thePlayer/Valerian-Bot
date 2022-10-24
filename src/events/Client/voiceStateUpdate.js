@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 const { embedNeutral } = require("../../config.js");
 const { embedError } = require("../../config.js");
 const { embedSuccess } = require("../../config.js");
@@ -41,7 +41,7 @@ module.exports = async (client, oldState, newState) => {
 	switch (stateChange.type) {
 		case "JOIN":
 		if (stateChange.members.size === 1 && player.paused) {
-			let emb = new MessageEmbed()
+			let emb = new EmbedBuilder()
 				.setColor(embedNeutral)
 				.setDescription(`Resuming playback because all of you left me with music to play all alone.`);
 			
@@ -61,7 +61,7 @@ module.exports = async (client, oldState, newState) => {
 		if (stateChange.members.size === 0 && !player.paused && player.playing) {
 			player.pause(true);
 
-			let emb = new MessageEmbed()
+			let emb = new EmbedBuilder()
 				.setColor(embedNeutral)
 				.setDescription(`The player has been paused because everybody left`);
 

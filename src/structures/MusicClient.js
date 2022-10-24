@@ -1,8 +1,6 @@
-const { Client, Intents, Collection, MessageEmbed, MessageButton, MessageSelectMenu } = require("discord.js");
+const { Client, GatewayIntentBits, Partials, Collection } = require("discord.js");
 const { LavasfyClient } = require("lavasfy");
 const { Manager } = require("erela.js");
-const { readdirSync } = require("fs");
-const { path } = require("path");
 const deezer = require("erela.js-deezer");
 const apple = require("erela.js-apple");
 const facebook = require("erela.js-facebook");
@@ -18,11 +16,21 @@ class MusicBot extends Client {
 					repliedUser: false
 				},
 				intents: [
-					Intents.FLAGS.GUILDS,
-					Intents.FLAGS.GUILD_MESSAGES, 
-					Intents.FLAGS.GUILD_MEMBERS, 
-					Intents.FLAGS.GUILD_VOICE_STATES
-				]
+					GatewayIntentBits.Guilds,
+					GatewayIntentBits.MessageContent,
+					GatewayIntentBits.GuildVoiceStates,
+					GatewayIntentBits.GuildMessages,
+					GatewayIntentBits.GuildMembers,
+					GatewayIntentBits.DirectMessages,
+					GatewayIntentBits.GuildInvites,
+
+				],
+				partials: [
+					Partials.Channel,
+					Partials.Message,
+					Partials.User,
+					Partials.GuildMember,
+				],
         });
 
 		this.commands = new Collection();
@@ -36,9 +44,6 @@ class MusicBot extends Client {
 		this.logger = require("../utils/logger.js");
 		if(!this.token) this.token = this.config.token;
 
-		/**
-		 *  Mongose for data base
-		 */
 		const dbOptions = {
 			useNewUrlParser: true,
 			autoIndex: false,
@@ -60,17 +65,7 @@ class MusicBot extends Client {
 		mongoose.connection.on('disconnected', () => {
 			console.log('[DB] Mongoose disconnected');
 		});
-        
-		/**
-		 * Error Handler
-		 */
-		this.on("disconnect", () => console.log("Bot is disconnecting..."))
-		this.on("reconnecting", () => console.log("Bot reconnecting..."))
-		this.on('warn', error => console.log(error));
-		this.on('error', error => console.log(error));
-		process.on('unhandledRejection', error => console.log(error));
-		process.on('uncaughtException', error => console.log(error));
-				
+        	
 		const client = this;
 
 		this.Lavasfy = new LavasfyClient(
@@ -113,42 +108,13 @@ class MusicBot extends Client {
 				const guild = client.guilds.cache.get(id);
 				if (guild) guild.shard.send(payload);
 			},
-		})
-		  
-		/**
-		 * Client Events
-		 */
-			readdirSync("./src/events/Client/").forEach(file => {
-				const event = require(`../events/Client/${file}`);
-				let eventName = file.split(".")[0];
-				this.logger.log(`Loading Events Client ${eventName}`, "event");
-				this.on(eventName, event.bind(null, this));
-			});
-
-		/**
-		 * Erela Manager Events
-		 */ 
-		readdirSync("./src/events/Lavalink/").forEach(file => {
-			const event = require(`../events/Lavalink/${file}`);
-			let eventName = file.split(".")[0];
-			client.logger.log(`Loading Events Lavalink ${eventName}`, "event");
-			client.manager.on(eventName, event.bind(null, client));
 		});
-
-		/**
-		 * Import all commands
-		 */
-		readdirSync("./src/commands/").forEach(dir => {
-			const commandFiles = readdirSync(`./src/commands/${dir}/`).filter(f => f.endsWith('.js'));
-			for (const file of commandFiles) {
-				const command = require(`../commands/${dir}/${file}`);
-				this.logger.log(`Loading ${command.category} commands ${command.name}`, "cmd");
-				this.commands.set(command.name, command);
-			}
-		})
-
+		  
+		["error", "commands", "slashCommand", "events"].forEach((handler) => {
+			require(`../handlers/${handler}`)(this);
+		});
 	}
-	
+
 	connect() {
     	return super.login(this.token);
     };

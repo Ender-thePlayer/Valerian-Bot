@@ -2,13 +2,13 @@ const { embedNeutral } = require("../../config.js");
 const { embedError } = require("../../config.js");
 const { embedSuccess } = require("../../config.js");
 const { prefix } = require("../../config.js");
-const { MessageEmbed} = require("discord.js");
+const { EmbedBuilder} = require("discord.js");
     
 module.exports = async (client, player, track, payload) => {
     
     const channel = client.channels.cache.get(player.textChannel);
 
-    let embed = new MessageEmbed()
+    let embed = new EmbedBuilder()
     .setDescription("Error when loading song! Track Stuck!")
     .setColor(embedError);
 

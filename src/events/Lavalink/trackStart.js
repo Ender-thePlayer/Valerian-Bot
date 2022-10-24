@@ -1,21 +1,27 @@
 const { embedNeutral } = require("../../config.js");
-const { MessageEmbed, MessageActionRow, MessageButton} = require("discord.js");
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder} = require("discord.js");
 const { convertTime } = require('../../utils/convert.js');
     
 module.exports = async (client, player, track, payload) => {
 	
-		let embed = new MessageEmbed()
-			.setDescription(`Started playing\n[${track.title}](${track.uri}) \n\`[${convertTime(track.duration)}]\``)
-			.setThumbnail(track.displayThumbnail("3"))
+		let embed = new EmbedBuilder()
+			.setTitle(`Now Playing`)
+			.setDescription(`[${track.title}](${track.uri})`)
 			.setColor(embedNeutral)
+			.addFields(
+				{ name: 'Song Duration', value: `\`${convertTime(track.duration)}\``, inline: true },
+				{ name: 'Position in Queue', value: `\`${player.queue.length}\``, inline: true },
+			)
+			
+		if (typeof track.displayThumbnail === "function") embed.setThumbnail(track.displayThumbnail("hqdefault"));
 
-		const But1 = new MessageButton().setCustomId("vdown").setEmoji("🔉").setStyle("PRIMARY");	
-		const But2 = new MessageButton().setCustomId("stop").setEmoji("⏹️").setStyle("SECONDARY");
-		const But3 = new MessageButton().setCustomId("pause").setEmoji("⏯️").setStyle("SECONDARY");
-		const But4 = new MessageButton().setCustomId("skip").setEmoji("⏭️").setStyle("SECONDARY");
-		const But5 = new MessageButton().setCustomId("vup").setEmoji("🔊").setStyle("PRIMARY");
+		const But1 = new ButtonBuilder().setCustomId("vdown").setEmoji("🔉").setStyle("Primary");	
+		const But2 = new ButtonBuilder().setCustomId("stop").setEmoji("⏹️").setStyle("Secondary");
+		const But3 = new ButtonBuilder().setCustomId("pause").setEmoji("⏯️").setStyle("Secondary");
+		const But4 = new ButtonBuilder().setCustomId("skip").setEmoji("⏭️").setStyle("Secondary");
+		const But5 = new ButtonBuilder().setCustomId("vup").setEmoji("🔊").setStyle("Primary");
 
-		const row = new MessageActionRow().addComponents(But1, But2, But3, But4, But5);
+		const row = new ActionRowBuilder().addComponents(But1, But2, But3, But4, But5);
 		
 		let NowPlaying = await client.channels.cache
 			.get(player.textChannel)
@@ -24,7 +30,7 @@ module.exports = async (client, player, track, payload) => {
   
 		const collector = NowPlaying.createMessageComponentCollector({
 			filter: (b) => {
-				if(b.guild.me.voice.channel && b.guild.me.voice.channelId === b.member.voice.channelId) return true;
+				if(b.guild.members.me.voice.channel && b.guild.members.me.voice.channelId === b.member.voice.channelId) return true;
 				else {
 				b.reply({content: `You are not connected to ${b.guild.me.voice.channel} to use this buttons.`, ephemeral: true}); return false;
 				};

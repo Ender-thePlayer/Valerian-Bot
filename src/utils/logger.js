@@ -27,7 +27,13 @@ module.exports = class Logger {
 		case "ready": {
 			return console.log(`[${chalk.gray(date)}]: [${chalk.black.bgBlueBright(type.toUpperCase())}] ${content}`);
 		} 
-		default: throw new TypeError("Logger type must be either warn, debug, log, ready, cmd or error.");
+		case "done": {
+			return console.log(`[${chalk.gray(date)}]: [${chalk.black.bgMagenta(type.toUpperCase())}] ${content}`);
+		} 
+		case "slash": {
+			return console.log(`[${chalk.gray(date)}]: [${chalk.black.bgWhite(type.toUpperCase())}] ${content}`);
+		}
+		default: throw new TypeError("Logger type must be either warn, debug, log, ready, cmd, done, slash or error.");
 		}
 	}
 };

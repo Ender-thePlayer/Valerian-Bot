@@ -10,22 +10,21 @@ module.exports = {
 	embedNeutral: "#303236",
 	embedError: "#ff0004s", 
 	embedSuccess: "#00ff0a",
-	logs: process.env.LOGS || "",
-	welcome: process.env.WKO || "",
-	leave: process.env.LVE || "",
 	status: "", //[online, idle, dnd, invisible]
 	type: "", //[PLAYING, LISTENING, WATCHING, COMPETING]
-	message: "",
-	
+	message: "PRE-RELEASE TESTING",
+	interactions: {
+		slash: true, // Should the interactions be enabled
+		global: true, // Should the interactions be registered globally
+		id: "836137452674220063", // Id of the bot
+		TEST_GUILD_ID: "", // Guild ID where the interactions should be registered. 
+	},
 	nodes: {
-		
 		host: process.env.HOST,
-		port: 443,
+		port: 80,
 		password: process.env.PASSWORD,
 		id: process.env.ID,
 		retryDelay: 3000,
-		secure: true
-	
+		secure: false
 	},
-
 }
