@@ -52,7 +52,7 @@ module.exports = {
 					.setFooter({text: `Requested by @${message.author.tag}`, iconURL: message.author.displayAvatarURL({dynamic : true})})
 					.setDescription(` Hi <@${message.author.id}>, I'm <@${client.user.id}>.\n
 					A multi-purpose bot with a lot of useful commands, that's on 24/7 and that's updated frequently for a good user experience.\n
-					We've added a slash command variant for every command.
+					<:spoopy:1036075649942704208> Back in Spoopy Times once again
 					To find more about a command, type \`\`${p}help [command]\`\` or \`\`/help [command]\`\`
 					\`\`\`\nPrefix: ${p}\nParameters: <> = required, [] = optional\`\`\`
 					**[Invite Bot](https://discord.com/api/oauth2/authorize?client_id=${client.user.id}&permissions=36768832&scope=applications.commands%20bot)** • **[Discord Server](https://discord.gg/svzyfVBmH2)**
