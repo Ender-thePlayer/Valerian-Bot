@@ -16,7 +16,7 @@ module.exports = {
 	interactions: {
 		slash: true, // Should the interactions be enabled
 		global: true, // Should the interactions be registered globally
-		id: "587249656657084446", // Id of the bot
+		id: "810856860751495198", // Id of the bot
 		TEST_GUILD_ID: "", // Guild ID where the interactions should be registered. 
 	},
 	nodes: {
