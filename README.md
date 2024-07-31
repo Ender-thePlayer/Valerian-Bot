@@ -1,4 +1,7 @@
-﻿# Welcome to Valerian!
+﻿# NOTICE: No longer works as this project hasn't been updated since november 2022 because I no longer have interest in it!
+
+
+# Welcome to Valerian!
 
 **Valerian** is a multi purpose discord bot, based on [LavaMusic](https://github.com/brblacky/lavamusic) with a lot of commands ranging from Utility to Fun Commands.
 
@@ -36,12 +39,3 @@ After running this command if you still get `cannot find module <module name>` t
 ```
 npm i <module_name>
 ```
-
-## Export a file
-
-You can export the current file by clicking **Export to disk** in the menu. You can choose to export the file as plain Markdown, as HTML using a Handlebars template or as a PDF.
-
-
-# Support
-
-To get help, news about Valerian and to report bugs join our [discord server](https://discord.gg/nmfrhCWzkA).
